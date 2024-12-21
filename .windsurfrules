@@ -1,0 +1,83 @@
+# Niche Site Generator - Project Rules
+project_type: "Astro SEO-Optimized Content Site"
+version: "1.0.0"
+
+# Content Types & Generation
+content_types:
+  hub:
+    description: "Central knowledge hub pages for topical authority"
+    purpose: ["Establish authority", "Connect content", "Target primary keywords"]
+    characteristics: ["Comprehensive overview", "Related content links", "Broad coverage"]
+
+  spoke:
+    description: "In-depth articles on specific topic aspects"
+    purpose: ["Detailed information", "Long-tail keywords", "Support hub authority"]
+    characteristics: ["Focused content", "Step-by-step guides", "Hub backlinks"]
+
+  programmatic:
+    description: "AI-generated pages for keyword variations"
+    purpose: ["Scale content", "Long-tail traffic", "AI-optimized structure"]
+    characteristics: ["SEO-guided, not template-bound", "Dynamic targeting", "Auto-linking"]
+    ai_workflow:
+      input: ["Keywords", "Intent", "Links", "Goals"]
+      output:
+        content: "AI-optimized for effectiveness"
+        frontmatter:
+          required: ["title", "description", "keywords", "schema", "internal_links"]
+          optional: ["faq", "toc", "custom_meta"]
+      quality: ["SEO validation", "Content quality", "Schema verification"]
+
+# Content Structure
+content:
+  collections:
+    - name: "topics"
+      type: "hub"
+      path: "src/content/topics"
+    - name: "posts"
+      type: "spoke"
+      path: "src/content/posts"
+    - name: "articles"
+      type: "programmatic"
+      path: "src/content/articles"
+    - name: "site"
+      type: "configuration"
+      path: "src/content/config"
+      components: ["header", "footer", "homepage", "navigation", "cta", "social"]
+  principles:
+    - "All content in Markdown (zero hardcoding)"
+    - "Component logic separate from content"
+    - "Structured frontmatter for metadata"
+    - "Automated internal linking"
+
+# SEO Requirements
+seo:
+  meta: ["title", "description", "keywords"]
+  schemas: ["Article", "HowTo", "List", "FAQ"]
+  optimization: ["structured_data", "internal_links", "sitemap", "rss"]
+
+# Development & Components
+guidelines:
+  - "Content-agnostic frontend design"
+  - "Astro files for pages, minimal React"
+  - "TypeScript & atomic design"
+  - "DaisyUI components"
+  - "TailwindCSS utility-first styling"
+
+# Architecture
+architecture:
+  storage: "Git-based, no database"
+  flow: ["Markdown content", "Edge processing", "Git commits", "Static rebuilds"]
+  state: ["Git source of truth", "ENV config", "Temporary processing"]
+
+# Deployment & Automation
+deployment:
+  platform: "Vercel static deployment"
+  edge_functions:
+    name: "CrewAI Workflows"
+    requirements: ["Python runtime", "CrewAI deps", "Memory management"]
+    endpoints: ["content-generator", "internal-linker", "seo-optimizer"]
+    security: ["API auth", "Rate limits", "Monitoring"]
+  automation: ["Content generation", "Validation", "Deployment", "Rollback"]
+
+# Documentation
+docs_sections: ["Overview", "Content", "Setup", "Management", "Deployment", "CrewAI"]

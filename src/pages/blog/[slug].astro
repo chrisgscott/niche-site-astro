@@ -1,0 +1,77 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+
+export const getStaticPaths = async () => {
+  const posts = await getCollection("posts");
+  const path = posts.map((post) => {
+    return {
+      params: {
+        slug: post.slug,
+      },
+      props: {
+        post,
+      },
+    };
+  });
+  return path;
+};
+
+type Props = {
+  post: CollectionEntry<"posts">;
+};
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+// Default image if none provided
+const DEFAULT_IMAGE = {
+  src: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1000",
+  width: 1000,
+  height: 667,
+};
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+  <article class="w-full flex flex-col items-center">
+    <header class="max-w-2xl mt-5">
+      <div class="badge badge-outline italic">
+        {post.data.category}
+      </div>
+      <h1 class="md:text-4xl text-2xl font-extrabold mb-4">
+        {post.data.title}
+      </h1>
+      <section class="flex mb-10">
+        <img
+          src={post.data.authorImage || "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=100"}
+          alt={post.data.author}
+          class="w-10 h-10 rounded-full object-cover"
+        />
+        <div class="flex flex-col ml-3">
+          <h2 class="text-md font-semibold">{post.data.author}</h2>
+          <time class="text-xs opacity-70">{post.data.date}</time>
+        </div>
+      </section>
+    </header>
+
+    {post.data.postImage ? (
+      <img
+        src={post.data.postImage}
+        alt={post.data.title}
+        class="rounded-xl md:max-w-2xl mb-6 w-full h-96 object-cover"
+      />
+    ) : (
+      <Image
+        src={DEFAULT_IMAGE.src}
+        alt={post.data.title}
+        width={DEFAULT_IMAGE.width}
+        height={DEFAULT_IMAGE.height}
+        format="webp"
+        class="rounded-xl md:max-w-2xl mb-6 w-full h-96 object-cover"
+      />
+    )}
+
+    <section class="prose md:prose-md mb-20"><Content /></section>
+  </article>
+</Layout>

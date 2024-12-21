@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+import BlogCard from "./BlogCard.astro";
+
+const allPosts = await getCollection("posts");
+const maxCardsToShow = 6;
+const displayedPosts = allPosts.slice(0, maxCardsToShow);
+---
+
+<div class="" >
+  <div class="py-10 max-w-lg">
+    <h1 class="text-4xl md:text-5xl font-semibold brightness-150">
+      Recent Articles
+    </h1>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+    <BlogCard posts={displayedPosts} maxCardsToShow={maxCardsToShow} />
+  </div>
+</div>

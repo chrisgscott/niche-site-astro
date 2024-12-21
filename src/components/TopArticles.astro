@@ -1,0 +1,20 @@
+---
+import { getCollection } from "astro:content";
+import BlogCard from "./BlogCard.astro";
+
+const topArticles = (await getCollection("posts")).filter(
+  (post) => post.data.topArticle === true
+);
+const maxCardsToShow = 4;
+---
+
+<div>
+  <div class="mb-10">
+    <h1 class="text-4xl md:text-5xl font-semibold brightness-150">
+      Top Articles
+    </h1>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+    <BlogCard posts={topArticles} maxCardsToShow={maxCardsToShow} />
+  </div>
+</div>
