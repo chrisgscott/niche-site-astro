@@ -1,57 +1,36 @@
 ---
-import { getCollection } from "astro:content";
-import { DEFAULT_IMAGES, getOptimizedImageUrl } from "../utils/images";
-import { getRemoteImage, getUnsplashImage } from "../utils/remote-image";
+import { getOptimizedImageUrl } from "../utils/images";
 
-const { content, maxCardsToShow } = Astro.props;
+interface Props {
+  content: any;
+  showCategory?: boolean;
+}
 
-// Helper function to get the content type and image
-const getContentDetails = async (item) => {
-  const type = item.collection;
-  let path = `/${type}/${item.slug}`;
-  
-  // Get the image data
-  const imageData = item.data.image || DEFAULT_IMAGES.post;
-  
-  return { 
-    type,
-    image: imageData,
-    path,
-    title: item.data.title,
-    description: item.data.description,
-    category: item.data.category,
-    featured: item.data.featured
-  };
-};
+const { content, showCategory = true } = Astro.props;
 
-// Process all content items
-const contentDetails = await Promise.all(content.slice(0, maxCardsToShow).map(getContentDetails));
+// Get content path based on collection type
+const path = `/${content.collection}/${content.slug}`;
 ---
 
-{contentDetails.map(({ title, description, image, path, type, category, featured }) => (
-  <article class="card lg:card-side h-full ring-1 ring-base-content/10 bg-base-300/20 p-7 rounded-3xl">
-    <a class="w-full lg:w-2/5" href={path}>
-      <img
-        src={getOptimizedImageUrl(image.src || DEFAULT_IMAGES.post.src, 800)}
-        alt={image.alt || `Featured image for ${title}`}
-        width={image.width || DEFAULT_IMAGES.post.width}
-        height={image.height || DEFAULT_IMAGES.post.height}
-        loading="lazy"
-        decoding="async"
-        class="w-full h-52 rounded-xl object-cover"
-      />
-    </a>
-    <div class="card-body lg:w-3/5 p-0 lg:pl-7">
-      <div class="flex flex-col h-full">
-        <div class="flex-grow">
-          <h2 class="card-title text-2xl mt-2">
-            <a href={path} class="hover:text-primary">
-              {title}
-            </a>
-          </h2>
-          <p class="mt-2 text-base-content/70">{description}</p>
-        </div>
+<article class="card bg-base-200/20 shadow-xl hover:shadow-2xl transition-shadow h-full">
+  <figure class="relative aspect-[16/9]">
+    <img
+      src={getOptimizedImageUrl(content.data.image?.src, 600)}
+      alt={content.data.image?.alt || content.data.title}
+      class="w-full h-full object-cover"
+    />
+  </figure>
+  <div class="card-body">
+    {showCategory && content.data.category && (
+      <div class="flex items-center gap-2 mb-2">
+        <span class="badge badge-primary">{content.data.category}</span>
       </div>
-    </div>
-  </article>
-))}
+    )}
+    <h3 class="card-title mb-2">
+      <a href={path} class="hover:text-primary">
+        {content.data.title}
+      </a>
+    </h3>
+    <p class="text-base-content/70">{content.data.description}</p>
+  </div>
+</article>

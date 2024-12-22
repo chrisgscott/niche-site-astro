@@ -23,14 +23,11 @@ parent_topic:
   slug: wedding-photography
 author: Chris Scott
 authorImage:
-  src: >-
-    https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=100&fm=jpg
+  src: https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=100&fm=jpg
   alt: Chris Scott - Wedding Photography Expert
   width: 100
   height: 100
 category: Business
-links:
-  related: []
 faq:
   - question: "How much does wedding photography typically cost?"
     answer: "Wedding photography prices typically range from $2,000 to $6,000, with the national average being around $3,500. However, prices can go higher for experienced photographers in major cities or for premium packages that include additional services like engagement shoots and albums."

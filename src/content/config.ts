@@ -44,11 +44,7 @@ const topics = defineCollection({
   schema: ({ image }) =>
     baseSchema.extend({
       type: z.literal('topic'),
-      title_short: z.string(),  // Now required
-      links: z.object({
-        posts: z.array(z.string()).default([]),
-        articles: z.array(z.string()).default([]),
-      }),
+      title_short: z.string(),  
       sections: z.array(z.object({
         title: z.string(),
         content: z.string(),
@@ -70,9 +66,6 @@ const posts = defineCollection({
         alt: 'AI Content Team Profile Picture'
       }),
       category: z.string(),
-      links: z.object({
-        related: z.array(z.string()).default([]),
-      }),
       parent_topic: z.object({
         title: z.string(),
         slug: z.string()
@@ -88,9 +81,6 @@ const articles = defineCollection({
       type: z.literal('article'),
       topic: z.string(),
       category: z.string(),
-      links: z.object({
-        related: z.array(z.string()).default([]),
-      }).optional(),
       schema: z.string().optional(),
       faq: faqSchema,
       variations: z.record(z.string(), z.array(z.string())).optional()
@@ -110,7 +100,6 @@ const config = defineCollection({
       header: z.object({
         navigation: z.array(z.object({
           name: z.string(),
-          href: z.string(),
         })),
       }),
       footer: z.object({
@@ -134,7 +123,6 @@ const config = defineCollection({
         description: z.string(),
         cta: z.object({
           text: z.string(),
-          href: z.string(),
         }),
       }),
       content_library: z.object({
@@ -149,7 +137,6 @@ const config = defineCollection({
         title: z.string(),
         description: z.string(),
         buttonText: z.string(),
-        buttonHref: z.string(),
       })),
     }),
   ]),

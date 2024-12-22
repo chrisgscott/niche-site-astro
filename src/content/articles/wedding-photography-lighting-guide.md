@@ -21,8 +21,6 @@ keywords:
 topic: wedding-photography
 category: Photography
 featured: true
-links:
-  related: []
 draft: false
 schema: HowTo
 faq:

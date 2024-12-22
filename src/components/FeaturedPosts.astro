@@ -1,15 +1,18 @@
 ---
-import { getCollection } from 'astro:content';
-import PostCard from './PostCard.astro';
+import type { CollectionEntry } from 'astro:content';
+import ContentCard from './ContentCard.astro';
 
-const posts = await getCollection("posts");
-const topArticles = posts.filter((post) => post.data.featured === true).slice(0, 3);
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+}
+
+const { posts } = Astro.props;
 ---
 
 <div class="w-full py-20">
   <div class="container mx-auto px-4">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-      {topArticles.map(post => <PostCard post={post} />)}
+      {posts.map(post => <ContentCard content={post} />)}
     </div>
   </div>
 </div>

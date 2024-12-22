@@ -17,7 +17,7 @@ const { content_library } = homepageConfig.data;
 ---
 
 <HomeLayout title="Home" description="Welcome to our Content Library">
-  <div class="w-full">
+  <div class="max-w-7xl mx-auto px-4 pb-20">
     <Hero />
     
     {/* Content Wrapper */}
@@ -25,7 +25,7 @@ const { content_library } = homepageConfig.data;
       {/* Content Library Header */}
       <div class="bg-accent/40 px-4 py-16 text-center">
         <h1 class="text-4xl md:text-5xl font-bold mb-6">{content_library.heading}</h1>
-        <p class="text-xl text-base-content/70 max-w-3xl mx-auto">
+        <p class="text-xl text-base-content/70 max-w-2xl mx-auto">
           {content_library.description}
         </p>
       </div>
@@ -33,7 +33,7 @@ const { content_library } = homepageConfig.data;
       {/* Topic Sections */}
       <div class="px-10">
         {sortedTopics.map(topic => (
-          <TopicSection topic={topic} posts={posts} />
+          <TopicSection topic={topic} recentPosts={posts} />
         ))}
       </div>
     </div>

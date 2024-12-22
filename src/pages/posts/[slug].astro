@@ -7,6 +7,7 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import CTAAlert from '../../components/CTAAlert.astro';
 import SidebarCTA from '../../components/SidebarCTA.astro';
 import FAQSection from '../../components/FAQSection.astro';
+import RelatedContent from '../../components/RelatedContent.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -30,10 +31,28 @@ const breadcrumbItems = [
   ),
   { label: post.data.title, href: `/posts/${post.slug}` }
 ];
+
+// Get related posts from the same topic
+const relatedPosts = (await getCollection('posts', (p) => {
+  return !p.data.draft && 
+         p.slug !== post.slug && 
+         p.data.parent_topic?.slug === post.data.parent_topic?.slug;
+})).slice(0, 3);
+
+// Get related articles if specified
+const relatedArticles = post.data.related_articles 
+  ? (await getCollection('articles', (article) => 
+      !article.data.draft && post.data.related_articles.includes(article.slug)
+    )).slice(0, 3)
+  : [];
 ---
 
-<Layout title={post.data.title} description={post.data.description}>
-  <article class="max-w-7xl mx-auto px-4 pb-20">
+<Layout 
+  title={post.data.title} 
+  description={post.data.description}
+  image={post.data.image}
+>
+  <main class="max-w-7xl mx-auto px-4 pb-20">
     <Breadcrumb 
       items={breadcrumbItems}
       className="my-4"
@@ -60,14 +79,16 @@ const breadcrumbItems = [
       </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-12">
+    <div class="lg:grid lg:grid-cols-[250px_1fr] lg:gap-12">
       <aside class="hidden lg:block">
-        <div class="sticky top-4 flex flex-col gap-12">
-          <TableOfContents 
-            headings={headings} 
-            hasFAQ={!!post.data.faq}
-          />
-          <SidebarCTA ctaId="post_content" />
+        <div class="sticky top-4">
+          <div class="flex flex-col gap-12">
+            <TableOfContents 
+              headings={headings} 
+              hasFAQ={!!post.data.faq}
+            />
+            <SidebarCTA ctaId="post_content" />
+          </div>
         </div>
       </aside>
       <div class="prose prose-lg lg:prose-xl max-w-none">
@@ -79,7 +100,17 @@ const breadcrumbItems = [
         {post.data.faq && <FAQSection faqs={post.data.faq} />}
       </div>
     </div>
-  </article>
+
+    <RelatedContent 
+      content={relatedPosts} 
+      title="Related Posts" 
+    />
+
+    <RelatedContent 
+      content={relatedArticles} 
+      title="Related Articles" 
+    />
+  </main>
 </Layout>
 
 <style>

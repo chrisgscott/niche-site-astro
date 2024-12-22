@@ -1,18 +1,22 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import PostCard from './PostCard.astro';
+import ContentCard from './ContentCard.astro';
 
 interface Props {
   topic: CollectionEntry<'topics'>;
-  posts: CollectionEntry<'posts'>[];
+  recentPosts: CollectionEntry<'posts'>[];
 }
 
-const { topic, posts } = Astro.props;
+const { topic, recentPosts } = Astro.props;
 
 // Get the 3 most recent posts for this topic
-const recentPosts = posts
-  .filter(post => post.data.topic === topic.slug)
-  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+const filteredPosts = recentPosts
+  .filter(post => post.data.parent_topic?.slug === topic.slug)
+  .sort((a, b) => {
+    const dateA = new Date(b.data.pubDate || b.data.updatedDate || 0).getTime();
+    const dateB = new Date(a.data.pubDate || a.data.updatedDate || 0).getTime();
+    return dateA - dateB;
+  })
   .slice(0, 3);
 
 // Use short title if available, otherwise use full title
@@ -26,9 +30,9 @@ const displayTitle = topic.data.title_short || topic.data.title;
       {topic.data.description}
     </p>
 
-    {recentPosts.length > 0 ? (
+    {filteredPosts.length > 0 ? (
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-8">
-        {recentPosts.map(post => <PostCard post={post} />)}
+        {filteredPosts.map(post => <ContentCard content={post} />)}
       </div>
     ) : (
       <p class="text-base-content/50 italic mb-8">No posts available for this topic yet.</p>
