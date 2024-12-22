@@ -7,7 +7,11 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "schema:validate": "node --loader ts-node/esm scripts/schema-tools.ts validate",
+    "schema:analyze": "node --loader ts-node/esm scripts/schema-tools.ts analyze",
+    "schema:migrate": "node --loader ts-node/esm scripts/schema-tools.ts migrate",
+    "schema:update-images": "node --loader ts-node/esm scripts/update-image-urls.ts"
   },
   "dependencies": {
     "@astrojs/mdx": "^2.1.1",
@@ -20,6 +24,9 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
     "daisyui": "^4.7.2",
-    "tailwindcss": "^3.4.1"
+    "globby": "^14.0.2",
+    "gray-matter": "^4.0.3",
+    "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2"
   }
 }

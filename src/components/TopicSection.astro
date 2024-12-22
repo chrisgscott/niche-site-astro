@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PostCard from './PostCard.astro';
+
+interface Props {
+  topic: CollectionEntry<'topics'>;
+  posts: CollectionEntry<'posts'>[];
+}
+
+const { topic, posts } = Astro.props;
+
+// Get the 3 most recent posts for this topic
+const recentPosts = posts
+  .filter(post => post.data.topic === topic.slug)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 3);
+
+// Use short title if available, otherwise use full title
+const displayTitle = topic.data.title_short || topic.data.title;
+---
+
+<section class="py-16">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-4">{displayTitle}</h2>
+    <p class="text-lg text-base-content/70 max-w-3xl mb-8">
+      {topic.data.description}
+    </p>
+
+    {recentPosts.length > 0 ? (
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-8">
+        {recentPosts.map(post => <PostCard post={post} />)}
+      </div>
+    ) : (
+      <p class="text-base-content/50 italic mb-8">No posts available for this topic yet.</p>
+    )}
+
+    <a href={`/topics/${topic.slug}`} class="btn btn-primary">
+      Explore {displayTitle}
+    </a>
+  </div>
+</section>

@@ -14,7 +14,7 @@ const DEFAULT_IMAGE = {
   <div
     class="card lg:card-side p-7 ring-1 ring-neutral/20 bg-base-300/40 rounded-3xl"
   >
-    <a class="w-full" href={`/blog/${featuredPost.slug}`}>
+    <a class="w-full" href={`/posts/${featuredPost.slug}`}>
       {featuredPost.data.postImage ? (
         <img
           src={featuredPost.data.postImage}
@@ -36,7 +36,7 @@ const DEFAULT_IMAGE = {
       <div class="badge badge-outline">Featured Post</div>
 
       <h1 class="card-title text-3xl mt-3">
-        <a href={`/blog/${featuredPost.slug}`} class="hover:text-primary">
+        <a href={`/posts/${featuredPost.slug}`} class="hover:text-primary">
           {featuredPost.data.title}
         </a>
       </h1>

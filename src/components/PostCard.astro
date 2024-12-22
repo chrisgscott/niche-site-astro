@@ -1,0 +1,60 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { DEFAULT_IMAGES, generateImageAlt } from '../utils/images';
+import { getUnsplashImage } from '../utils/remote-image';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+---
+
+<div class="card ring-1 ring-base-content/10 bg-base-300/20 rounded-3xl">
+  <a href={`/${post.collection}/${post.slug}`}>
+    {post.data.image ? (
+      <img
+        src={getUnsplashImage(
+          post.data.image.src,
+          post.data.image.width,
+          post.data.image.height,
+          post.data.image.alt || generateImageAlt(post.data.title, 'featured')
+        )}
+        alt={post.data.image.alt || generateImageAlt(post.data.title, 'featured')}
+        width={post.data.image.width}
+        height={post.data.image.height}
+        loading="lazy"
+        decoding="async"
+        class="w-full h-72 rounded-t-3xl object-cover"
+      />
+    ) : (
+      <img
+        src={DEFAULT_IMAGES.post.src}
+        alt={generateImageAlt(post.data.title, 'featured')}
+        width={DEFAULT_IMAGES.post.width}
+        height={DEFAULT_IMAGES.post.height}
+        loading="lazy"
+        decoding="async"
+        class="w-full h-72 rounded-t-3xl object-cover"
+      />
+    )}
+  </a>
+
+  <div class="card-body p-7">
+    {post.data.category && (
+      <h2 class="text-xs lg:text-sm text-base-content/70">
+        <span>{post.data.category}</span>
+      </h2>
+    )}
+
+    <h3 class="card-title mt-0.5">
+      <a href={`/${post.collection}/${post.slug}`} class="hover:text-primary">
+        {post.data.title}
+      </a>
+    </h3>
+
+    <p class="mt-0.5 text-base-content/70 line-clamp-2">
+      {post.data.description}
+    </p>
+  </div>
+</div>

@@ -136,15 +136,29 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"articles": {
-"best-seo-tools.mdx": {
-	id: "best-seo-tools.mdx";
-  slug: "best-seo-tools";
+"wedding-photography-lighting-guide.md": {
+	id: "wedding-photography-lighting-guide.md";
+  slug: "wedding-photography-lighting-guide";
   body: string;
   collection: "articles";
   data: InferEntrySchema<"articles">
-} & { render(): Render[".mdx"] };
+} & { render(): Render[".md"] };
+"wedding-photography-packages.md": {
+	id: "wedding-photography-packages.md";
+  slug: "wedding-photography-packages";
+  body: string;
+  collection: "articles";
+  data: InferEntrySchema<"articles">
+} & { render(): Render[".md"] };
 };
 "config": {
+"homepage.md": {
+	id: "homepage.md";
+  slug: "homepage";
+  body: string;
+  collection: "config";
+  data: InferEntrySchema<"config">
+} & { render(): Render[".md"] };
 "site.mdx": {
 	id: "site.mdx";
   slug: "site";
@@ -217,6 +231,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
+"wedding-photography-pricing.md": {
+	id: "wedding-photography-pricing.md";
+  slug: "wedding-photography-pricing";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 };
 "topics": {
 "seo-fundamentals.mdx": {
@@ -233,6 +254,13 @@ declare module 'astro:content' {
   collection: "topics";
   data: InferEntrySchema<"topics">
 } & { render(): Render[".mdx"] };
+"wedding-photography.md": {
+	id: "wedding-photography.md";
+  slug: "wedding-photography";
+  body: string;
+  collection: "topics";
+  data: InferEntrySchema<"topics">
+} & { render(): Render[".md"] };
 "youtube-marketing.mdx": {
 	id: "youtube-marketing.mdx";
   slug: "youtube-marketing";

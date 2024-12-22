@@ -1,11 +1,14 @@
 ---
+import { getCollection } from "astro:content";
 import ThemeToggle from "../components/ThemeToggle.astro";
 
-const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Articles", href: "/blog" },
-  { name: "About", href: "/about" },
-];
+// Get site configuration
+const [siteConfig] = await getCollection('config', ({ id, data }) => {
+  return id === 'site.mdx' && data.type === 'site';
+});
+
+const { header, logo, title } = siteConfig.data;
+const { navigation } = header;
 
 const pathname = new URL(Astro.request.url).pathname;
 ---
@@ -16,12 +19,7 @@ const pathname = new URL(Astro.request.url).pathname;
   >
     <div class="navbar-start">
       <div class="dropdown">
-        <button
-          aria-label="button"
-          tabindex="0"
-          role="button"
-          class="btn btn-ghost lg:hidden"
-        >
+        <label tabindex="0" class="btn btn-ghost lg:hidden">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5"
@@ -35,8 +33,9 @@ const pathname = new URL(Astro.request.url).pathname;
               stroke-width="2"
               d="M4 6h16M4 12h8m-8 6h16"></path>
           </svg>
-        </button>
+        </label>
         <ul
+          tabindex="0"
           class="menu dropdown-content menu-md z-[1] mt-3 w-52 gap-2 rounded-box bg-base-100 p-2 shadow"
         >
           {
@@ -48,21 +47,25 @@ const pathname = new URL(Astro.request.url).pathname;
           }
         </ul>
       </div>
-      <a class="btn btn-ghost text-xl" href="/"> Blog</a>
+      <a href="/" class="btn btn-ghost normal-case text-xl">
+        {logo ? <img src={logo} alt={title} class="h-8" /> : title}
+      </a>
     </div>
     <div class="navbar-center hidden lg:flex">
-      {
-        navigation.map((item) => (
-          <nav class="menu menu-horizontal">
-            <a
-              href={item.href}
-              class={`hover:text-primary hover:bg-primary/10 transition flex py-2 px-4 rounded-md ${pathname === item.href ? "text-primary bg-primary/10" : ""}`}
-            >
-              {item.name}
-            </a>
-          </nav>
-        ))
-      }
+      <ul class="menu menu-horizontal px-1">
+        {
+          navigation.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class={`hover:text-primary hover:bg-primary/10 transition flex py-2 px-4 rounded-md ${pathname === item.href ? "text-primary bg-primary/10" : ""}`}
+              >
+                {item.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </div>
     <div class="navbar-end">
       <ThemeToggle />
