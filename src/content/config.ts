@@ -33,6 +33,12 @@ const baseSchema = z.object({
   featured: z.boolean().default(false),
 });
 
+// FAQ schema
+const faqSchema = z.array(z.object({
+  question: z.string(),
+  answer: z.string()
+})).optional();
+
 // Topics (Hub pages)
 const topics = defineCollection({
   schema: ({ image }) =>
@@ -71,6 +77,7 @@ const posts = defineCollection({
         title: z.string(),
         slug: z.string()
       }).optional(),
+      faq: faqSchema,
     }),
 });
 
@@ -85,12 +92,7 @@ const articles = defineCollection({
         related: z.array(z.string()).default([]),
       }).optional(),
       schema: z.string().optional(),
-      faq: z.array(
-        z.object({
-          question: z.string(),
-          answer: z.string()
-        })
-      ).optional(),
+      faq: faqSchema,
       variations: z.record(z.string(), z.array(z.string())).optional()
     }),
 });

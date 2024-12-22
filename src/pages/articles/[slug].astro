@@ -1,100 +1,88 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import { Image } from "astro:assets";
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
 import { DEFAULT_IMAGES, getOptimizedImageUrl } from '../../utils/images';
+import TableOfContents from '../../components/TableOfContents.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CTAAlert from '../../components/CTAAlert.astro';
+import SidebarCTA from '../../components/SidebarCTA.astro';
+import FAQSection from '../../components/FAQSection.astro';
 
-export const getStaticPaths = async () => {
-  const articles = await getCollection("articles");
-  const path = articles.map((article) => {
-    return {
-      params: {
-        slug: article.slug,
-      },
-      props: {
-        article,
-      },
-    };
-  });
-  return path;
-};
-
-type Props = {
-  article: CollectionEntry<"articles">;
-};
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map(article => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
 
 const { article } = Astro.props;
-const { Content } = await article.render();
+const { Content, headings } = await article.render();
 
-// Get the parent topic if it exists
-const topics = article.data.topic ? 
-  await getCollection("topics", (topic) => 
-    topic.data.links.articles.includes(article.slug)
-  ) : [];
-const parentTopic = topics[0];
+// Build breadcrumb items
+const breadcrumbItems = [
+  ...(article.data.parent_topic 
+    ? [{ 
+        label: article.data.parent_topic.title, 
+        href: `/topics/${article.data.parent_topic.slug}` 
+      }]
+    : []
+  ),
+  { label: article.data.title, href: `/articles/${article.slug}` }
+];
 ---
 
 <Layout title={article.data.title} description={article.data.description}>
-  <article class="prose prose-lg lg:prose-xl mx-auto px-4 py-8">
-    <div class="not-prose mb-8">
-      {article.data.image && (
-        <img
-          src={getOptimizedImageUrl(article.data.image, 1200)}
-          alt={article.data.title}
-          class="w-full aspect-video object-cover rounded-xl shadow-lg"
-        />
-      )}
-    </div>
-
-    <header class="text-center mb-12">
-      <div class="flex items-center justify-center gap-4 mb-4">
-        {article.data.schema && (
-          <div class="badge badge-outline">{article.data.schema}</div>
-        )}
+  <article class="max-w-7xl mx-auto px-4 pb-20">
+    <Breadcrumb 
+      items={breadcrumbItems}
+      className="my-4"
+    />
+    
+    <div class="relative h-[50vh] min-h-[400px] max-h-[600px] mb-12 rounded-2xl overflow-hidden shadow-lg">
+      {/* Background Image */}
+      <div 
+        class="absolute inset-0 bg-cover bg-center"
+        style={`background-image: url(${getOptimizedImageUrl(article.data.image?.src || DEFAULT_IMAGES.article.src, 1600)})`}
+      >
+        {/* Gradient Overlay */}
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
       </div>
-      <h1 class="mb-4">{article.data.title}</h1>
-      <p class="text-xl text-base-content/80 mb-6">{article.data.description}</p>
-    </header>
 
-    <div class="prose prose-lg max-w-2xl">
-      <Content />
-    </div>
-
-    {/* FAQ Section */}
-    {article.data.faq && article.data.faq.length > 0 && (
-      <div class="max-w-2xl w-full mt-12">
-        <h2 class="text-3xl font-bold mb-6">Frequently Asked Questions</h2>
-        <div class="space-y-4">
-          {article.data.faq.map((item) => (
-            <div class="collapse collapse-plus bg-base-200">
-              <input type="radio" name="faq-accordion" /> 
-              <div class="collapse-title text-xl font-medium">
-                {item.question}
-              </div>
-              <div class="collapse-content">
-                <p>{item.answer}</p>
-              </div>
-            </div>
-          ))}
+      {/* Content */}
+      <div class="relative h-full flex flex-col items-center justify-center px-4 py-12 max-w-4xl mx-auto text-center">
+        <div class="flex items-center justify-center gap-4 mb-8">
+          <span class="badge badge-primary">{article.data.category}</span>
+          {article.data.featured && <span class="badge">Featured</span>}
         </div>
+        <h1 class="text-4xl lg:text-5xl font-bold mb-8 text-white">{article.data.title}</h1>
+        <p class="text-xl text-white/90 max-w-2xl mx-auto">{article.data.description}</p>
       </div>
-    )}
+    </div>
 
-    {/* Variations */}
-    {article.data.variations && Object.keys(article.data.variations).length > 0 && (
-      <div class="max-w-2xl w-full mt-12">
-        <h2 class="text-3xl font-bold mb-6">Available Options</h2>
-        {Object.entries(article.data.variations).map(([category, options]) => (
-          <div class="mb-6">
-            <h3 class="text-xl font-semibold mb-3 capitalize">{category}</h3>
-            <div class="flex flex-wrap gap-2">
-              {options.map((option) => (
-                <div class="badge badge-outline">{option}</div>
-              ))}
-            </div>
-          </div>
-        ))}
+    <div class="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-12">
+      <aside class="hidden lg:block">
+        <div class="sticky top-4 flex flex-col gap-12">
+          <TableOfContents headings={headings} />
+          <SidebarCTA ctaId="post_content" />
+        </div>
+      </aside>
+      <div class="prose prose-lg lg:prose-xl max-w-none">
+        <Content />
+        <CTAAlert
+          ctaId="post_content"
+          className="not-prose my-20"
+        />
+        {article.data.faq && <FAQSection faqs={article.data.faq} />}
       </div>
-    )}
+    </div>
   </article>
 </Layout>
+
+<style>
+  /* Ensure headings have smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+  }
+</style>

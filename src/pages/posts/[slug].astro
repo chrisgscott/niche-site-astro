@@ -6,6 +6,7 @@ import TableOfContents from '../../components/TableOfContents.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import CTAAlert from '../../components/CTAAlert.astro';
 import SidebarCTA from '../../components/SidebarCTA.astro';
+import FAQSection from '../../components/FAQSection.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -32,7 +33,7 @@ const breadcrumbItems = [
 ---
 
 <Layout title={post.data.title} description={post.data.description}>
-  <article class="max-w-7xl mx-auto px-4">
+  <article class="max-w-7xl mx-auto px-4 pb-20">
     <Breadcrumb 
       items={breadcrumbItems}
       className="my-4"
@@ -70,8 +71,9 @@ const breadcrumbItems = [
         <Content />
         <CTAAlert
           ctaId="post_content"
-          className="not-prose my-20"
+          className="not-prose my-10"
         />
+        {post.data.faq && <FAQSection faqs={post.data.faq} />}
       </div>
     </div>
   </article>

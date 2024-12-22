@@ -31,6 +31,20 @@ authorImage:
 category: Business
 links:
   related: []
+faq:
+  - question: "How much does wedding photography typically cost?"
+    answer: "Wedding photography prices typically range from $2,000 to $6,000, with the national average being around $3,500. However, prices can go higher for experienced photographers in major cities or for premium packages that include additional services like engagement shoots and albums."
+  - question: "What's included in a typical wedding photography package?"
+    answer: "A standard wedding photography package usually includes 8-10 hours of coverage, a second shooter, high-resolution digital images, an online gallery, and basic image editing. Some packages may also include engagement sessions, printed albums, or additional coverage hours."
+  - question: "Why do wedding photographers charge so much?"
+    answer: "Wedding photographers' prices reflect their expertise, professional equipment (often $10,000+), business expenses, time spent editing (40-50 hours per wedding), insurance, backup equipment, and the responsibility of capturing once-in-a-lifetime moments. The price also covers pre-wedding consultations and post-wedding processing."
+  - question: "How far in advance should I book a wedding photographer?"
+    answer: "Most couples book their wedding photographer 12-18 months in advance, especially for peak wedding season dates (May-October). Popular photographers in high-demand areas may book up to 2 years in advance for prime dates."
+  - question: "Do I need a second photographer at my wedding?"
+    answer: "While not mandatory, a second photographer is recommended for weddings with more than 100 guests or multiple locations. They can capture different angles during ceremonies, additional candid moments, and help ensure comprehensive coverage of your wedding day."
+  - question: "What payment structure do most wedding photographers use?"
+    answer: "Most wedding photographers require a non-refundable retainer (typically 25-50% of the total) to secure your date, with the remaining balance due 2-4 weeks before the wedding. Some may offer payment plans to split the remaining balance into monthly installments."
+
 ---
 
 # The Ultimate Guide to Wedding Photography Pricing
