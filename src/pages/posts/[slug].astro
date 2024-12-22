@@ -1,6 +1,5 @@
 ---
 import { getCollection } from 'astro:content';
-import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import { DEFAULT_IMAGES } from '../../utils/images';
 
@@ -14,22 +13,33 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await post.render();
+
+// Helper function to get optimized Unsplash image URL
+const getOptimizedImageUrl = (url: string | undefined, width: number) => {
+  if (!url) return '';
+  if (typeof url !== 'string') return '';
+  if (url.includes('unsplash.com')) {
+    const baseUrl = url.split('?')[0];
+    return `${baseUrl}?q=80&w=${width}&fm=jpg&fit=crop`;
+  }
+  return url;
+};
 ---
 
 <Layout title={post.data.title} description={post.data.description}>
   <article class="prose prose-lg lg:prose-xl mx-auto px-4 py-8">
     <div class="not-prose mb-8">
       {post.data.image ? (
-        <Image
-          src={post.data.image.src}
+        <img
+          src={getOptimizedImageUrl(post.data.image.src, 1200)}
           alt={post.data.image.alt}
           width={post.data.image.width}
           height={post.data.image.height}
           class="w-full aspect-video object-cover rounded-xl shadow-lg"
         />
       ) : (
-        <Image
-          src={DEFAULT_IMAGES.post.src}
+        <img
+          src={getOptimizedImageUrl(DEFAULT_IMAGES.post.src, 1200)}
           alt={`${post.data.title} featured image`}
           width={DEFAULT_IMAGES.post.width}
           height={DEFAULT_IMAGES.post.height}
@@ -47,16 +57,23 @@ const { Content } = await post.render();
       <p class="text-xl text-base-content/80 mb-6">{post.data.description}</p>
       <div class="flex items-center justify-center gap-4">
         <div class="flex items-center gap-2">
-          <Image
-            src={post.data.authorImage || DEFAULT_IMAGES.profile.src}
-            alt={post.data.author}
-            width={DEFAULT_IMAGES.profile.width}
-            height={DEFAULT_IMAGES.profile.height}
-            class="w-10 h-10 rounded-full object-cover"
+          <img
+            src={getOptimizedImageUrl(post.data.authorImage || DEFAULT_IMAGES.profile.src, 100)}
+            alt={post.data.author || 'Author'}
+            width="40"
+            height="40"
+            class="rounded-full"
           />
-          <span class="font-medium">{post.data.author}</span>
+          <span class="text-base-content/80">{post.data.author || 'Anonymous'}</span>
         </div>
-        <span class="text-base-content/60">{post.data.date}</span>
+        <span class="text-base-content/60">•</span>
+        <time class="text-base-content/80" datetime={post.data.date}>
+          {new Date(post.data.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </time>
       </div>
     </header>
 
