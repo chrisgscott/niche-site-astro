@@ -30,7 +30,7 @@ const faqSchema = {
   <>
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
     <div class={`not-prose mt-20 ${className}`}>
-      <h2 class="text-3xl font-bold mb-8">Frequently Asked Questions</h2>
+      <h2 id="frequently-asked-questions" class="text-3xl font-bold mb-8">Frequently Asked Questions</h2>
       <div class="space-y-4">
         {faqs.map((faq) => (
           <div class="collapse collapse-plus bg-base-200/50 border border-base-content/5">

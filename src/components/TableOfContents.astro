@@ -5,15 +5,34 @@ interface Props {
     slug: string;
     text: string;
   }[];
+  hasFAQ?: boolean;
 }
 
-const { headings } = Astro.props;
+const { headings, hasFAQ = false } = Astro.props;
+
+// Group headings by their depth
+const groupedToc = headings
+  .filter((heading) => heading.depth <= 3) // Only include h1, h2, h3
+  .map((heading) => ({
+    ...heading,
+    children: [],
+  }));
+
+// Add FAQ section if it exists
+if (hasFAQ) {
+  groupedToc.push({
+    depth: 2,
+    slug: "frequently-asked-questions",
+    text: "Frequently Asked Questions",
+    children: [],
+  });
+}
 
 // Filter for h2 and h3 headings only
 const toc = headings.filter(heading => heading.depth === 2 || heading.depth === 3);
 
 // Group h3s under their parent h2s
-const groupedToc = toc.reduce((acc, heading) => {
+const nestedGroupedToc = toc.reduce((acc, heading) => {
   if (heading.depth === 2) {
     acc.push({
       ...heading,
@@ -29,7 +48,7 @@ const groupedToc = toc.reduce((acc, heading) => {
 <nav class="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
   <h2 class="font-bold text-xl mb-4">Table of Contents</h2>
   <ul class="space-y-2 text-sm">
-    {groupedToc.map((section) => (
+    {nestedGroupedToc.map((section) => (
       <li class="toc-section" data-section={section.slug}>
         <a
           href={`#${section.slug}`}
@@ -55,6 +74,16 @@ const groupedToc = toc.reduce((acc, heading) => {
         )}
       </li>
     ))}
+    {hasFAQ && (
+      <li class="toc-section" data-section="frequently-asked-questions">
+        <a
+          href="#frequently-asked-questions"
+          class="hover:text-primary transition-colors duration-200 inline-block py-1 font-medium"
+        >
+          Frequently Asked Questions
+        </a>
+      </li>
+    )}
   </ul>
 </nav>
 
@@ -139,5 +168,8 @@ const groupedToc = toc.reduce((acc, heading) => {
 <style>
   .subsection-wrapper {
     transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .toc-section:has(a[aria-current="true"]) {
+    @apply text-primary;
   }
 </style>
