@@ -1,0 +1,143 @@
+---
+interface Props {
+  headings: {
+    depth: number;
+    slug: string;
+    text: string;
+  }[];
+}
+
+const { headings } = Astro.props;
+
+// Filter for h2 and h3 headings only
+const toc = headings.filter(heading => heading.depth === 2 || heading.depth === 3);
+
+// Group h3s under their parent h2s
+const groupedToc = toc.reduce((acc, heading) => {
+  if (heading.depth === 2) {
+    acc.push({
+      ...heading,
+      children: []
+    });
+  } else if (heading.depth === 3 && acc.length > 0) {
+    acc[acc.length - 1].children.push(heading);
+  }
+  return acc;
+}, [] as any[]);
+---
+
+<nav class="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+  <h2 class="font-bold text-xl mb-4">Table of Contents</h2>
+  <ul class="space-y-2 text-sm">
+    {groupedToc.map((section) => (
+      <li class="toc-section" data-section={section.slug}>
+        <a
+          href={`#${section.slug}`}
+          class="hover:text-primary transition-colors duration-200 inline-block py-1 font-medium"
+        >
+          {section.text}
+        </a>
+        {section.children.length > 0 && (
+          <div class="subsection-wrapper h-0 overflow-hidden">
+            <ul class="ml-4 mt-1 space-y-1 subsections">
+              {section.children.map((subsection) => (
+                <li>
+                  <a
+                    href={`#${subsection.slug}`}
+                    class="hover:text-primary transition-colors duration-200 inline-block py-1"
+                  >
+                    {subsection.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<script>
+  // Track sections and their subsections
+  const sections = document.querySelectorAll('.toc-section');
+  
+  function closeAllSubsections() {
+    document.querySelectorAll('.subsection-wrapper').forEach(wrapper => {
+      wrapper.style.height = '0px';
+    });
+  }
+
+  function openSubsection(tocItem: Element) {
+    const wrapper = tocItem.querySelector('.subsection-wrapper');
+    if (wrapper) {
+      const content = wrapper.querySelector('.subsections');
+      wrapper.style.height = content?.offsetHeight + 'px';
+    }
+  }
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const id = entry.target.getAttribute('id');
+      const tocItem = document.querySelector(`[data-section="${id}"]`);
+      const link = document.querySelector(`nav a[href="#${id}"]`);
+      
+      if (entry.isIntersecting) {
+        // Highlight current section
+        link?.classList.add('text-primary');
+        
+        // Show subsections if this is an h2
+        if (tocItem) {
+          closeAllSubsections();
+          openSubsection(tocItem);
+        }
+      } else {
+        link?.classList.remove('text-primary');
+      }
+    });
+  }, {
+    rootMargin: '-20% 0px -80% 0px'
+  });
+
+  // Track all headers that have an `id` applied
+  document.querySelectorAll('h2[id], h3[id]').forEach((heading) => {
+    observer.observe(heading);
+  });
+
+  // Also highlight subsections when they're in view
+  const subSectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const id = entry.target.getAttribute('id');
+      const link = document.querySelector(`nav a[href="#${id}"]`);
+      
+      if (entry.isIntersecting) {
+        link?.classList.add('text-primary');
+        // Make sure parent section's subsections are visible
+        const parentH2 = entry.target.closest('h2, h3')?.previousElementSibling?.closest('h2');
+        if (parentH2) {
+          const parentId = parentH2.getAttribute('id');
+          const parentTocItem = document.querySelector(`[data-section="${parentId}"]`);
+          if (parentTocItem) {
+            closeAllSubsections();
+            openSubsection(parentTocItem);
+          }
+        }
+      } else {
+        link?.classList.remove('text-primary');
+      }
+    });
+  }, {
+    rootMargin: '-20% 0px -80% 0px'
+  });
+
+  // Track h3 headers separately
+  document.querySelectorAll('h3[id]').forEach((heading) => {
+    subSectionObserver.observe(heading);
+  });
+</script>
+
+<style>
+  .subsection-wrapper {
+    transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+</style>

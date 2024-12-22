@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  ctaId: string;
+  className?: string;
+}
+
+const { ctaId, className = "" } = Astro.props;
+
+// Get CTA configuration
+const [ctaConfig] = await getCollection('config', ({ id, data }) => {
+  return id === 'cta.mdx' && data.type === 'cta';
+});
+
+// Get specific CTA content
+const cta = ctaConfig.data.ctas[ctaId];
+if (!cta) {
+  throw new Error(`CTA with ID "${ctaId}" not found in config`);
+}
+
+const { title, description, buttonText, buttonHref } = cta;
+---
+
+<div class={`not-prose ${className}`}>
+  <div class="alert alert-info shadow-lg bg-base-200/50 border border-base-content/10">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    <div>
+      <h3 class="font-bold text-lg">{title}</h3>
+      <p class="text-base-content/80">{description}</p>
+    </div>
+    <a href={buttonHref} class="btn btn-primary">{buttonText}</a>
+  </div>
+</div>

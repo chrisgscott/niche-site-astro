@@ -18,6 +18,9 @@ keywords:
 draft: false
 featured: true
 topic: wedding-photography
+parent_topic:
+  title: Wedding Photography
+  slug: wedding-photography
 author: Chris Scott
 authorImage:
   src: >-

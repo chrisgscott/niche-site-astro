@@ -1,7 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import { DEFAULT_IMAGES } from '../../utils/images';
+import { DEFAULT_IMAGES, getOptimizedImageUrl } from '../../utils/images';
+import TableOfContents from '../../components/TableOfContents.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CTAAlert from '../../components/CTAAlert.astro';
+import SidebarCTA from '../../components/SidebarCTA.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -12,71 +16,71 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+const { Content, headings } = await post.render();
 
-// Helper function to get optimized Unsplash image URL
-const getOptimizedImageUrl = (url: string | undefined, width: number) => {
-  if (!url) return '';
-  if (typeof url !== 'string') return '';
-  if (url.includes('unsplash.com')) {
-    const baseUrl = url.split('?')[0];
-    return `${baseUrl}?q=80&w=${width}&fm=jpg&fit=crop`;
-  }
-  return url;
-};
+// Build breadcrumb items
+const breadcrumbItems = [
+  ...(post.data.parent_topic 
+    ? [{ 
+        label: post.data.parent_topic.title, 
+        href: `/topics/${post.data.parent_topic.slug}` 
+      }]
+    : []
+  ),
+  { label: post.data.title, href: `/posts/${post.slug}` }
+];
 ---
 
 <Layout title={post.data.title} description={post.data.description}>
-  <article class="prose prose-lg lg:prose-xl mx-auto px-4 py-8">
-    <div class="not-prose mb-8">
-      {post.data.image ? (
-        <img
-          src={getOptimizedImageUrl(post.data.image.src, 1200)}
-          alt={post.data.image.alt}
-          width={post.data.image.width}
-          height={post.data.image.height}
-          class="w-full aspect-video object-cover rounded-xl shadow-lg"
-        />
-      ) : (
-        <img
-          src={getOptimizedImageUrl(DEFAULT_IMAGES.post.src, 1200)}
-          alt={`${post.data.title} featured image`}
-          width={DEFAULT_IMAGES.post.width}
-          height={DEFAULT_IMAGES.post.height}
-          class="w-full aspect-video object-cover rounded-xl shadow-lg"
-        />
-      )}
+  <article class="max-w-7xl mx-auto px-4">
+    <Breadcrumb 
+      items={breadcrumbItems}
+      className="my-4"
+    />
+    
+    <div class="relative h-[50vh] min-h-[400px] max-h-[600px] mb-12 rounded-2xl overflow-hidden shadow-lg">
+      {/* Background Image */}
+      <div 
+        class="absolute inset-0 bg-cover bg-center"
+        style={`background-image: url(${getOptimizedImageUrl(post.data.image?.src || DEFAULT_IMAGES.post.src, 1600)})`}
+      >
+        {/* Gradient Overlay */}
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
+      </div>
+
+      {/* Content */}
+      <div class="relative h-full flex flex-col items-center justify-center px-4 py-12 max-w-4xl mx-auto text-center">
+        <div class="flex items-center justify-center gap-4 mb-8">
+          <span class="badge badge-primary">{post.data.category}</span>
+          {post.data.featured && <span class="badge">Featured</span>}
+        </div>
+        <h1 class="text-4xl lg:text-5xl font-bold mb-8 text-white">{post.data.title}</h1>
+        <p class="text-xl text-white/90 max-w-2xl mx-auto">{post.data.description}</p>
+      </div>
     </div>
 
-    <header class="text-center mb-12">
-      <div class="flex items-center justify-center gap-4 mb-4">
-        <span class="badge badge-primary">{post.data.category}</span>
-        {post.data.featured && <span class="badge">Featured</span>}
-      </div>
-      <h1 class="mb-4">{post.data.title}</h1>
-      <p class="text-xl text-base-content/80 mb-6">{post.data.description}</p>
-      <div class="flex items-center justify-center gap-4">
-        <div class="flex items-center gap-2">
-          <img
-            src={getOptimizedImageUrl(post.data.authorImage || DEFAULT_IMAGES.profile.src, 100)}
-            alt={post.data.author || 'Author'}
-            width="40"
-            height="40"
-            class="rounded-full"
-          />
-          <span class="text-base-content/80">{post.data.author || 'Anonymous'}</span>
+    <div class="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-12">
+      <aside class="hidden lg:block">
+        <div class="sticky top-4 flex flex-col gap-12">
+          <TableOfContents headings={headings} />
+          <SidebarCTA ctaId="post_content" />
         </div>
-        <span class="text-base-content/60">•</span>
-        <time class="text-base-content/80" datetime={post.data.date}>
-          {new Date(post.data.date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
-        </time>
+      </aside>
+      <div class="prose prose-lg lg:prose-xl max-w-none">
+        <Content />
+        <CTAAlert
+          ctaId="post_content"
+          className="not-prose my-20"
+        />
       </div>
-    </header>
-
-    <Content />
+    </div>
   </article>
 </Layout>
+
+<style>
+  /* Ensure headings have smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+  }
+</style>

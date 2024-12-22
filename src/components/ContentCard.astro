@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { DEFAULT_IMAGES } from "../utils/images";
+import { DEFAULT_IMAGES, getOptimizedImageUrl } from "../utils/images";
 import { getRemoteImage, getUnsplashImage } from "../utils/remote-image";
 
 const { content, maxCardsToShow } = Astro.props;
@@ -9,13 +9,6 @@ const { content, maxCardsToShow } = Astro.props;
 const getContentDetails = async (item) => {
   const type = item.collection;
   let path = `/${type}/${item.slug}`;
-  let topic = null;
-  
-  // If this is a post or article, try to get its topic
-  if (item.data.topic) {
-    const topics = await getCollection('topics');
-    topic = topics.find(t => t.slug === item.data.topic);
-  }
   
   // Get the image data
   const imageData = item.data.image || DEFAULT_IMAGES.post;
@@ -24,12 +17,8 @@ const getContentDetails = async (item) => {
     type,
     image: imageData,
     path,
-    topic,
     title: item.data.title,
     description: item.data.description,
-    author: item.data.author,
-    authorImage: item.data.authorImage,
-    date: item.data.date,
     category: item.data.category,
     featured: item.data.featured
   };
@@ -39,19 +28,14 @@ const getContentDetails = async (item) => {
 const contentDetails = await Promise.all(content.slice(0, maxCardsToShow).map(getContentDetails));
 ---
 
-{contentDetails.map(({ title, description, image, path, type, topic, author, authorImage, date, category, featured }) => (
+{contentDetails.map(({ title, description, image, path, type, category, featured }) => (
   <article class="card lg:card-side h-full ring-1 ring-base-content/10 bg-base-300/20 p-7 rounded-3xl">
     <a class="w-full lg:w-2/5" href={path}>
       <img
-        src={getUnsplashImage(
-          image.src,
-          image.width,
-          image.height,
-          image.alt || `Featured image for ${title}`
-        )}
+        src={getOptimizedImageUrl(image.src || DEFAULT_IMAGES.post.src, 800)}
         alt={image.alt || `Featured image for ${title}`}
-        width={image.width}
-        height={image.height}
+        width={image.width || DEFAULT_IMAGES.post.width}
+        height={image.height || DEFAULT_IMAGES.post.height}
         loading="lazy"
         decoding="async"
         class="w-full h-52 rounded-xl object-cover"
@@ -60,40 +44,12 @@ const contentDetails = await Promise.all(content.slice(0, maxCardsToShow).map(ge
     <div class="card-body lg:w-3/5 p-0 lg:pl-7">
       <div class="flex flex-col h-full">
         <div class="flex-grow">
-          {topic && (
-            <a href={`/topics/${topic.slug}`} class="text-sm text-primary hover:text-primary-focus">
-              {topic.data.title}
-            </a>
-          )}
           <h2 class="card-title text-2xl mt-2">
             <a href={path} class="hover:text-primary">
               {title}
             </a>
           </h2>
           <p class="mt-2 text-base-content/70">{description}</p>
-        </div>
-        
-        <div class="flex items-center mt-6">
-          {authorImage && (
-            <img
-              src={getUnsplashImage(
-                authorImage.src,
-                authorImage.width,
-                authorImage.height,
-                authorImage.alt || `Profile picture of ${author}`
-              )}
-              alt={authorImage.alt || `Profile picture of ${author}`}
-              width={authorImage.width}
-              height={authorImage.height}
-              loading="lazy"
-              decoding="async"
-              class="w-10 h-10 rounded-full object-cover"
-            />
-          )}
-          <div class="ml-3">
-            <p class="text-sm font-medium">{author}</p>
-            <p class="text-xs text-base-content/70">{date}</p>
-          </div>
         </div>
       </div>
     </div>

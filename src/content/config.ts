@@ -67,6 +67,10 @@ const posts = defineCollection({
       links: z.object({
         related: z.array(z.string()).default([]),
       }),
+      parent_topic: z.object({
+        title: z.string(),
+        slug: z.string()
+      }).optional(),
     }),
 });
 
@@ -135,6 +139,16 @@ const config = defineCollection({
         heading: z.string(),
         description: z.string(),
       }),
+    }),
+    // CTA Config Schema
+    z.object({
+      type: z.literal('cta'),
+      ctas: z.record(z.string(), z.object({
+        title: z.string(),
+        description: z.string(),
+        buttonText: z.string(),
+        buttonHref: z.string(),
+      })),
     }),
   ]),
 });

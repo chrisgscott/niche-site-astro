@@ -67,3 +67,13 @@ export function getOptimalImageDimensions(
 export function generateImageAlt(title: string, type: string = 'content'): string {
   return `${title} - ${type} image`;
 }
+
+export function getOptimizedImageUrl(url: string | undefined, width: number): string {
+  if (!url) return '';
+  if (typeof url !== 'string') return '';
+  if (url.includes('unsplash.com')) {
+    const baseUrl = url.split('?')[0];
+    return `${baseUrl}?q=80&w=${width}&fm=jpg&fit=crop`;
+  }
+  return url;
+}

@@ -1,0 +1,28 @@
+---
+import { getEntry } from 'astro:content';
+
+interface Props {
+  ctaId: string;
+  className?: string;
+}
+
+const { ctaId, className = "" } = Astro.props;
+
+const cta = await getEntry('config', 'cta');
+const content = cta.data.ctas[ctaId];
+
+if (!content) {
+  throw new Error(`CTA with ID "${ctaId}" not found`);
+}
+---
+
+<div class={`bg-base-200/50 rounded-lg p-6 flex flex-col shadow-md border border-base-content/5 gap-4 ${className}`}>
+  <h3 class="text-lg font-semibold">{content.title}</h3>
+  <p class="text-sm text-base-content/80">{content.description}</p>
+  <a 
+    href={content.buttonHref} 
+    class="btn btn-primary btn-sm w-full"
+  >
+    {content.buttonText}
+  </a>
+</div>

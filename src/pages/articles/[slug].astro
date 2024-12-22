@@ -2,6 +2,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { Image } from "astro:assets";
+import { DEFAULT_IMAGES, getOptimizedImageUrl } from '../../utils/images';
 
 export const getStaticPaths = async () => {
   const articles = await getCollection("articles");
@@ -34,34 +35,25 @@ const parentTopic = topics[0];
 ---
 
 <Layout title={article.data.title} description={article.data.description}>
-  <article class="w-full flex flex-col items-center">
-    <header class="max-w-2xl mt-5">
-      <div class="flex flex-wrap gap-2 mb-4">
-        <div class="badge badge-outline">Article</div>
+  <article class="prose prose-lg lg:prose-xl mx-auto px-4 py-8">
+    <div class="not-prose mb-8">
+      {article.data.image && (
+        <img
+          src={getOptimizedImageUrl(article.data.image, 1200)}
+          alt={article.data.title}
+          class="w-full aspect-video object-cover rounded-xl shadow-lg"
+        />
+      )}
+    </div>
+
+    <header class="text-center mb-12">
+      <div class="flex items-center justify-center gap-4 mb-4">
         {article.data.schema && (
           <div class="badge badge-outline">{article.data.schema}</div>
         )}
       </div>
-
-      <section class="flex mb-6">
-        <img
-          src="/images/ai-author.png"
-          alt="AI Content Team"
-          class="w-10 h-10 rounded-full object-cover"
-        />
-        <div class="flex flex-col ml-3">
-          <span class="text-sm font-medium">AI Content Team</span>
-          <time class="text-sm text-gray-500">{article.data.date}</time>
-        </div>
-      </section>
-
-      {article.data.image && (
-        <img
-          src={article.data.image}
-          alt={article.data.title}
-          class="w-full h-[300px] object-cover rounded-lg mb-8"
-        />
-      )}
+      <h1 class="mb-4">{article.data.title}</h1>
+      <p class="text-xl text-base-content/80 mb-6">{article.data.description}</p>
     </header>
 
     <div class="prose prose-lg max-w-2xl">
