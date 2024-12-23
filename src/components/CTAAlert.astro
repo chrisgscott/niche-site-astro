@@ -10,7 +10,7 @@ const { ctaId, className = "" } = Astro.props;
 
 // Get CTA configuration
 const [ctaConfig] = await getCollection('config', ({ id, data }) => {
-  return id === 'cta.mdx' && data.type === 'cta';
+  return id === 'cta.mdx' && data.type === 'component' && data.component === 'cta';
 });
 
 // Get specific CTA content

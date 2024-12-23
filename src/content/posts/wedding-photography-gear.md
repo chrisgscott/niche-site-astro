@@ -3,29 +3,20 @@ type: post
 title: Essential Wedding Photography Gear Guide
 description: A detailed guide to the essential camera equipment and accessories needed for professional wedding photography
 date: '2024-01-15'
-image:
-  src: https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=2000&fm=jpg
-  alt: Professional camera gear laid out for wedding photography
-  width: 2000
-  height: 1333
 keywords:
   - wedding photography gear
   - camera equipment
   - photography accessories
   - wedding photography tips
-draft: false
-featured: false
-topic: wedding-photography
 parent_topic:
-  title: Wedding Photography
+  title: Wedding Photography Guide
   slug: wedding-photography
-author: Chris Scott
-authorImage:
-  src: https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=100&fm=jpg
-  alt: Chris Scott - Wedding Photography Expert
-  width: 100
-  height: 100
-category: Equipment
+image:
+  src: https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=2000&fm=jpg
+  alt: Professional camera gear laid out for wedding photography
+  width: 2000
+  height: 1333
+draft: false
 faq:
   - question: What camera is best for wedding photography?
     answer: For professional wedding photography, a full-frame camera with good low-light performance is essential. Popular choices include the Canon EOS R6, Sony A7 IV, or Nikon Z6 II. These cameras offer excellent autofocus, dual card slots for backup, and superior image quality in various lighting conditions.

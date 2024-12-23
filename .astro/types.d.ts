@@ -141,133 +141,63 @@ declare module 'astro:content' {
   slug: "wedding-photography-lighting-guide";
   body: string;
   collection: "articles";
-  data: InferEntrySchema<"articles">
+  data: any
 } & { render(): Render[".md"] };
 "wedding-photography-packages.md": {
 	id: "wedding-photography-packages.md";
   slug: "wedding-photography-packages";
   body: string;
   collection: "articles";
-  data: InferEntrySchema<"articles">
+  data: any
 } & { render(): Render[".md"] };
 };
 "config": {
+"cta.mdx": {
+	id: "cta.mdx";
+  slug: "cta";
+  body: string;
+  collection: "config";
+  data: any
+} & { render(): Render[".mdx"] };
 "homepage.md": {
 	id: "homepage.md";
   slug: "homepage";
   body: string;
   collection: "config";
-  data: InferEntrySchema<"config">
+  data: any
 } & { render(): Render[".md"] };
 "site.mdx": {
 	id: "site.mdx";
   slug: "site";
   body: string;
   collection: "config";
-  data: InferEntrySchema<"config">
+  data: any
 } & { render(): Render[".mdx"] };
 };
 "posts": {
-"Boosting Sales with Effective Search Engine Optimization (SEO).mdx": {
-	id: "Boosting Sales with Effective Search Engine Optimization (SEO).mdx";
-  slug: "boosting-sales-with-effective-search-engine-optimization-seo";
+"wedding-photography-gear.md": {
+	id: "wedding-photography-gear.md";
+  slug: "wedding-photography-gear";
   body: string;
   collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".mdx"] };
-"Growing Your New YouTube Channel with Effective SEO Strategies.mdx": {
-	id: "Growing Your New YouTube Channel with Effective SEO Strategies.mdx";
-  slug: "growing-your-new-youtube-channel-with-effective-seo-strategies";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".mdx"] };
-"Leveraging Google Ads for Increased Business Sales.mdx": {
-	id: "Leveraging Google Ads for Increased Business Sales.mdx";
-  slug: "leveraging-google-ads-for-increased-business-sales";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".mdx"] };
-"Leveraging Social Media Marketing for Business Growth.mdx": {
-	id: "Leveraging Social Media Marketing for Business Growth.mdx";
-  slug: "leveraging-social-media-marketing-for-business-growth";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".mdx"] };
-"Maximizing Business Growth Through.mdx": {
-	id: "Maximizing Business Growth Through.mdx";
-  slug: "maximizing-business-growth-through";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".mdx"] };
-"Strategies to Boost Sales Through Your Website.mdx": {
-	id: "Strategies to Boost Sales Through Your Website.mdx";
-  slug: "strategies-to-boost-sales-through-your-website";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".mdx"] };
-"Using SEO Strategies for Business Growth.mdx": {
-	id: "Using SEO Strategies for Business Growth.mdx";
-  slug: "using-seo-strategies-for-business-growth";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".mdx"] };
-"Utilizing YouTube for Business Growth.mdx": {
-	id: "Utilizing YouTube for Business Growth.mdx";
-  slug: "utilizing-youtube-for-business-growth";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".mdx"] };
-"technical-seo-guide.mdx": {
-	id: "technical-seo-guide.mdx";
-  slug: "technical-seo-guide";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".mdx"] };
+  data: any
+} & { render(): Render[".md"] };
 "wedding-photography-pricing.md": {
 	id: "wedding-photography-pricing.md";
   slug: "wedding-photography-pricing";
   body: string;
   collection: "posts";
-  data: InferEntrySchema<"posts">
+  data: any
 } & { render(): Render[".md"] };
 };
 "topics": {
-"seo-fundamentals.mdx": {
-	id: "seo-fundamentals.mdx";
-  slug: "seo-fundamentals";
-  body: string;
-  collection: "topics";
-  data: InferEntrySchema<"topics">
-} & { render(): Render[".mdx"] };
-"social-media-marketing.mdx": {
-	id: "social-media-marketing.mdx";
-  slug: "social-media-marketing";
-  body: string;
-  collection: "topics";
-  data: InferEntrySchema<"topics">
-} & { render(): Render[".mdx"] };
 "wedding-photography.md": {
 	id: "wedding-photography.md";
   slug: "wedding-photography";
   body: string;
   collection: "topics";
-  data: InferEntrySchema<"topics">
+  data: any
 } & { render(): Render[".md"] };
-"youtube-marketing.mdx": {
-	id: "youtube-marketing.mdx";
-  slug: "youtube-marketing";
-  body: string;
-  collection: "topics";
-  data: InferEntrySchema<"topics">
-} & { render(): Render[".mdx"] };
 };
 
 	};
@@ -278,5 +208,5 @@ declare module 'astro:content' {
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	export type ContentConfig = typeof import("../src/content/config.js");
+	export type ContentConfig = never;
 }

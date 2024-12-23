@@ -7,11 +7,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "schema:validate": "node --loader ts-node/esm scripts/schema-tools.ts validate",
-    "schema:analyze": "node --loader ts-node/esm scripts/schema-tools.ts analyze",
-    "schema:migrate": "node --loader ts-node/esm scripts/schema-tools.ts migrate",
-    "schema:update-images": "node --loader ts-node/esm scripts/update-image-urls.ts"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/mdx": "^2.1.1",

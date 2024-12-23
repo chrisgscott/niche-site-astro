@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ContentCard from './ContentCard.astro';
+
+interface Props {
+  items: CollectionEntry<'posts' | 'articles'>[];
+  type?: string;
+  limit?: number;
+}
+
+const { 
+  items, 
+  type = 'posts', 
+  limit = items.length 
+} = Astro.props;
+
+const displayItems = items.slice(0, limit);
+---
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+  {displayItems.map((item) => (
+    <ContentCard 
+      title={item.data.title}
+      description={item.data.description}
+      image={item.data.image}
+      date={item.data.date}
+      slug={`/${type}/${item.slug}`}
+    />
+  ))}
+</div>

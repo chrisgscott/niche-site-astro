@@ -46,17 +46,19 @@ const DEFAULT_IMAGE = {
       </p>
 
       <div class="flex items-center gap-5 mt-8">
-        <div class="flex items-center gap-3">
-          <img
-            class="w-9 h-9 rounded-full"
-            src={featuredPost.data.authorImage || "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=100"}
-            alt={featuredPost.data.author}
-          />
-          <div>
-            <p class="text-sm font-medium">{featuredPost.data.author}</p>
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <div class="text-sm">
+              <time datetime={featuredPost.data.date}>
+                {new Date(featuredPost.data.date).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </time>
+            </div>
           </div>
         </div>
-        <p class="text-sm text-base-content/70">{featuredPost.data.date}</p>
       </div>
     </div>
   </div>

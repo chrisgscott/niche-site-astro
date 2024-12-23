@@ -2,35 +2,75 @@
 import { getOptimizedImageUrl } from "../utils/images";
 
 interface Props {
-  content: any;
+  title?: string;
+  description?: string;
+  image?: { src: string; alt?: string };
+  date?: string;
+  slug?: string;
+  content?: any;
   showCategory?: boolean;
+  hideDescription?: boolean;
 }
 
-const { content, showCategory = true } = Astro.props;
+const { 
+  content, 
+  title, 
+  description, 
+  image, 
+  date, 
+  slug, 
+  showCategory = true,
+  hideDescription = false
+} = Astro.props;
 
-// Get content path based on collection type
-const path = `/${content.collection}/${content.slug}`;
+// Determine which data source to use
+const cardContent = content || { 
+  data: { 
+    title, 
+    description, 
+    image,
+    date 
+  },
+  slug 
+};
+
+// Get content path 
+const path = slug || (cardContent.collection ? `/${cardContent.collection}/${cardContent.slug}` : '#');
 ---
 
 <article class="card bg-base-200/20 shadow-xl hover:shadow-2xl transition-shadow h-full">
   <figure class="relative aspect-[16/9]">
     <img
-      src={getOptimizedImageUrl(content.data.image?.src, 600)}
-      alt={content.data.image?.alt || content.data.title}
+      src={getOptimizedImageUrl(
+        cardContent.data.image?.src || cardContent.data.image?.src, 
+        600
+      )}
+      alt={cardContent.data.image?.alt || cardContent.data.title || title}
       class="w-full h-full object-cover"
     />
   </figure>
   <div class="card-body">
-    {showCategory && content.data.category && (
+    {showCategory && cardContent.data.category && (
       <div class="flex items-center gap-2 mb-2">
-        <span class="badge badge-primary">{content.data.category}</span>
+        <span class="badge badge-primary">{cardContent.data.category}</span>
       </div>
     )}
     <h3 class="card-title mb-2">
       <a href={path} class="hover:text-primary">
-        {content.data.title}
+        {cardContent.data.title || title}
       </a>
     </h3>
-    <p class="text-base-content/70">{content.data.description}</p>
+    {!hideDescription && (
+      <p class="text-base-content/70">{cardContent.data.description || description}</p>
+    )}
+    {cardContent.data.date && (
+      <div class="text-sm text-base-content/50 mt-2">
+        {new Date(cardContent.data.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })}
+      </div>
+    )}
   </div>
 </article>

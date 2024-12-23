@@ -19,12 +19,20 @@ export async function getStaticPaths() {
 const { article } = Astro.props;
 const { Content, headings } = await article.render();
 
+// Get parent topic data if it exists
+let parentTopic;
+if (article.data.parent_topic) {
+  [parentTopic] = await getCollection('topics', (topic) => 
+    topic.data.topic === article.data.parent_topic.slug
+  );
+}
+
 // Build breadcrumb items
 const breadcrumbItems = [
-  ...(article.data.parent_topic 
+  ...(parentTopic 
     ? [{ 
-        label: article.data.parent_topic.title, 
-        href: `/topics/${article.data.parent_topic.slug}` 
+        label: parentTopic.data.title_short, 
+        href: `/topics/${parentTopic.data.topic}` 
       }]
     : []
   ),
@@ -52,8 +60,11 @@ const breadcrumbItems = [
       {/* Content */}
       <div class="relative h-full flex flex-col items-center justify-center px-4 py-12 max-w-4xl mx-auto text-center">
         <div class="flex items-center justify-center gap-4 mb-8">
-          <span class="badge badge-primary">{article.data.category}</span>
-          {article.data.featured && <span class="badge">Featured</span>}
+          {parentTopic && (
+            <a href={`/topics/${parentTopic.data.topic}`} class="badge badge-primary">
+              {parentTopic.data.title_short}
+            </a>
+          )}
         </div>
         <h1 class="text-4xl lg:text-5xl font-bold mb-8 text-white">{article.data.title}</h1>
         <p class="text-xl text-white/90 max-w-2xl mx-auto">{article.data.description}</p>

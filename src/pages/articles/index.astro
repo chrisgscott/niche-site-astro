@@ -1,0 +1,240 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ContentCard from '../../components/ContentCard.astro';
+import { DEFAULT_IMAGES, getOptimizedImageUrl } from '../../utils/images';
+
+// Fetch all articles and parent topics
+const articles = await getCollection('articles', (article) => !article.data.draft);
+const topics = await getCollection('topics');
+
+// Dynamically generate filters from article_variables
+const articleFilters = (() => {
+  const filters: { [key: string]: Set<string> } = {};
+  
+  articles.forEach(article => {
+    if (article.data.article_variables) {
+      Object.entries(article.data.article_variables).forEach(([key, value]) => {
+        if (!filters[key]) {
+          filters[key] = new Set();
+        }
+        filters[key].add(value as string);
+      });
+    }
+  });
+
+  // Format filter names
+  return Object.entries(filters).map(([key, values]) => ({
+    name: key
+      .split('_')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' '),
+    key: key,
+    values: Array.from(values).sort()
+  }));
+})();
+
+// Sort articles by date
+const sortedArticles = articles.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const pageTitle = 'Photography Articles';
+const pageDescription = 'Comprehensive collection of in-depth photography articles covering advanced techniques, gear reviews, and professional insights.';
+
+// Group articles by parent topic
+const articlesByTopic = sortedArticles.reduce((acc, article) => {
+  const parentTopic = topics.find(
+    topic => topic.data.topic === article.data.parent_topic.slug
+  );
+  const topicTitle = parentTopic?.data.title_short || article.data.parent_topic.title;
+  
+  if (!acc[topicTitle]) {
+    acc[topicTitle] = [];
+  }
+  acc[topicTitle].push(article);
+  return acc;
+}, {});
+
+console.log('Total Articles:', articles.length);
+console.log('Sorted Articles:', sortedArticles.length);
+
+---
+
+<Layout 
+  title={pageTitle}
+  description={pageDescription}
+>
+  {/* Full-width Hero Section */}
+  <section class="relative h-[50vh] min-h-[400px] max-h-[600px] mb-12 max-w-7xl mx-auto px-4 rounded-b-2xl overflow-hidden shadow-lg">
+    <div 
+      class="absolute inset-0 bg-cover bg-center"
+      style={`background-image: url(${DEFAULT_IMAGES.hero.src})`}
+    >
+      {/* Gradient Overlay */}
+      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
+    </div>
+
+    {/* Content */}
+    <div class="relative h-full flex flex-col items-center justify-center px-4 py-12 max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl lg:text-5xl font-bold mb-8 text-white">{pageTitle}</h1>
+      <p class="text-xl text-white/90 max-w-2xl mx-auto">{pageDescription}</p>
+    </div>
+  </section>
+
+  {/* Two-column Main Content */}
+  <main class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8">
+    {/* Sidebar Filters */}
+    <aside class="bg-base-200 p-6 rounded-xl h-fit sticky top-4">
+      <h3 class="text-xl font-bold mb-4">Filter Articles</h3>
+      
+      {/* Dynamic Filters */}
+      {articleFilters.map((filter) => (
+        <div class="mb-6">
+          <h4 class="font-semibold mb-2">{filter.name}</h4>
+          <div class="space-y-2">
+            {filter.values.map((value) => (
+              <label class="flex items-center space-x-2 cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  class="checkbox checkbox-primary" 
+                  data-filter={filter.key} 
+                  value={value}
+                />
+                <span>{value}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      {/* Search Input */}
+      <div class="mt-6">
+        <input 
+          type="text" 
+          placeholder="Search articles..." 
+          class="input input-bordered w-full" 
+          id="articles-search"
+        />
+      </div>
+    </aside>
+
+    {/* Articles Content */}
+    <section>
+      {/* Articles Grid */}
+      <div 
+        id="articles-grid" 
+        class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+      >
+        {sortedArticles.map((article) => (
+          <ContentCard 
+            content={article}
+            hideDescription={true}
+          />
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <script is:inline define:vars={{
+    articlesData: sortedArticles.map(article => ({
+      slug: article.slug,
+      data: {
+        title: article.data.title,
+        description: article.data.description,
+        parentTopic: topics
+          .find(topic => topic.data.topic === article.data.parent_topic.slug)?.data.title_short 
+          || article.data.parent_topic.title,
+        article_variables: article.data.article_variables
+      }
+    })),
+    articleFilters: articleFilters
+  }}>
+    document.addEventListener('DOMContentLoaded', () => {
+      const articlesGrid = document.getElementById('articles-grid');
+      const dynamicFilters = document.querySelectorAll('input[data-filter]');
+      const searchInput = document.getElementById('articles-search');
+      const articleCards = articlesGrid.querySelectorAll('.card');
+
+      window.articlesData = JSON.parse(JSON.stringify(articlesData));
+      window.articleFilters = JSON.parse(JSON.stringify(articleFilters));
+
+      function filterArticles() {
+        console.log('Filtering articles...');
+        let visibleCount = 0;
+
+        const selectedDynamicFilters = {};
+        dynamicFilters.forEach(filter => {
+          const filterName = filter.getAttribute('data-filter');
+          if (!selectedDynamicFilters[filterName]) {
+            selectedDynamicFilters[filterName] = [];
+          }
+          if (filter.checked) {
+            selectedDynamicFilters[filterName].push(filter.value);
+          }
+        });
+
+        console.log('Selected Dynamic Filters:', selectedDynamicFilters);
+        console.log('Total Articles:', articlesData.length);
+
+        articlesData.forEach((fullArticle, index) => {
+          const card = articleCards[index];
+          
+          // Dynamic filter matching
+          let dynamicFilterMatch = true;
+          Object.keys(selectedDynamicFilters).forEach(filterName => {
+            console.log('Checking filter:', filterName);
+            console.log('Article variables:', fullArticle.data.article_variables);
+            
+            // If filters are selected for this category, check if the article matches any of them
+            if (selectedDynamicFilters[filterName].length > 0) {
+              if (!fullArticle.data.article_variables || 
+                  !selectedDynamicFilters[filterName].includes(fullArticle.data.article_variables[filterName])) {
+                console.log('Filter value does not match');
+                dynamicFilterMatch = false;
+              }
+            }
+          });
+
+          // Search matching
+          const searchTerm = searchInput.value.toLowerCase();
+          const searchMatch = searchTerm === '' || 
+            fullArticle.data.title.toLowerCase().includes(searchTerm) ||
+            fullArticle.data.description.toLowerCase().includes(searchTerm);
+
+          // Apply visibility based on matches
+          const isVisible = dynamicFilterMatch && searchMatch;
+          card.style.display = isVisible ? 'block' : 'none';
+
+          if (isVisible) visibleCount++;
+        });
+
+        // Update results count or message
+        const resultsMessage = document.getElementById('results-message');
+        if (resultsMessage) {
+          resultsMessage.textContent = `Showing ${visibleCount} of ${articlesData.length} articles`;
+        }
+      }
+
+      dynamicFilters.forEach(filter => {
+        filter.addEventListener('change', (event) => {
+          console.log('Dynamic filter changed:', event.target.getAttribute('data-filter'), event.target.value, 'Checked:', event.target.checked);
+          filterArticles();
+        });
+      });
+
+      searchInput.addEventListener('input', (event) => {
+        console.log('Search input changed:', event.target.value);
+        filterArticles();
+      });
+
+      // Initial filter setup
+      filterArticles();
+    });
+  </script>
+</Layout>
+
+<style>
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+  }
+</style>

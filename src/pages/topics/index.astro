@@ -1,0 +1,145 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ContentCard from '../../components/ContentCard.astro';
+
+// Fetch all topics
+const topics = await getCollection('topics');
+
+// Extract unique categories and tags
+const categories = [...new Set(topics.flatMap(topic => topic.data.keywords || []))];
+const topicTypes = [...new Set(topics.map(topic => topic.data.type || 'Uncategorized'))];
+
+// Initial state for filtering
+const pageTitle = 'Photography Topics';
+const pageDescription = 'Explore comprehensive guides and in-depth resources across various photography domains.';
+---
+
+<Layout 
+  title={pageTitle}
+  description={pageDescription}
+>
+  <main class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8">
+    {/* Sidebar Filters */}
+    <aside class="bg-base-200 p-6 rounded-xl h-fit sticky top-4">
+      <h3 class="text-xl font-bold mb-4">Filter Topics</h3>
+      
+      {/* Category Filter */}
+      <div class="mb-6">
+        <h4 class="font-semibold mb-2">Categories</h4>
+        <div class="space-y-2">
+          {categories.map((category) => (
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input 
+                type="checkbox" 
+                class="checkbox checkbox-primary" 
+                data-filter="category" 
+                value={category}
+              />
+              <span>{category}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Topic Type Filter */}
+      <div>
+        <h4 class="font-semibold mb-2">Topic Types</h4>
+        <div class="space-y-2">
+          {topicTypes.map((type) => (
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input 
+                type="checkbox" 
+                class="checkbox checkbox-primary" 
+                data-filter="type" 
+                value={type}
+              />
+              <span>{type}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Search Input */}
+      <div class="mt-6">
+        <input 
+          type="text" 
+          placeholder="Search topics..." 
+          class="input input-bordered w-full" 
+          id="topic-search"
+        />
+      </div>
+    </aside>
+
+    {/* Topics Grid */}
+    <section>
+      <h1 class="text-4xl font-bold mb-8">{pageTitle}</h1>
+      <p class="text-xl text-base-content/70 mb-12">{pageDescription}</p>
+      
+      <div 
+        id="topics-grid" 
+        class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        {topics.map((topic) => (
+          <ContentCard 
+            content={topic}
+            showCategory={false}
+          />
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const topicsGrid = document.getElementById('topics-grid');
+      const categoryFilters = document.querySelectorAll('input[data-filter="category"]');
+      const typeFilters = document.querySelectorAll('input[data-filter="type"]');
+      const searchInput = document.getElementById('topic-search');
+      const topicCards = topicsGrid.querySelectorAll('.card');
+
+      function filterTopics() {
+        const selectedCategories = Array.from(categoryFilters)
+          .filter(input => input.checked)
+          .map(input => input.value);
+
+        const selectedTypes = Array.from(typeFilters)
+          .filter(input => input.checked)
+          .map(input => input.value);
+
+        const searchTerm = searchInput.value.toLowerCase();
+
+        topicCards.forEach(card => {
+          const topicData = JSON.parse(card.dataset.topicData);
+          
+          const categoryMatch = selectedCategories.length === 0 || 
+            selectedCategories.some(cat => topicData.keywords.includes(cat));
+          
+          const typeMatch = selectedTypes.length === 0 || 
+            selectedTypes.includes(topicData.type);
+          
+          const searchMatch = searchTerm === '' || 
+            topicData.title.toLowerCase().includes(searchTerm) ||
+            topicData.description.toLowerCase().includes(searchTerm);
+
+          card.style.display = categoryMatch && typeMatch && searchMatch 
+            ? 'block' 
+            : 'none';
+        });
+      }
+
+      [...categoryFilters, ...typeFilters].forEach(filter => {
+        filter.addEventListener('change', filterTopics);
+      });
+
+      searchInput.addEventListener('input', filterTopics);
+    });
+  </script>
+</Layout>
+
+<style>
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+  }
+</style>
