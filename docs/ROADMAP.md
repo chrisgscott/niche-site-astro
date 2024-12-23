@@ -6,7 +6,7 @@
 - [x] Markdown-based content management
 - [x] Topic (hub) and Post (spoke) structure
 - [ ] SEO-optimized schema.org integration
-- [ ] Dynamic routing for topics and posts
+- [x] Dynamic routing for topics and posts
 
 ## Short-term Goals (v0.2.0)
 

@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
+import { remarkInternalLinks } from './src/utils/remark-internal-links';
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,6 +19,7 @@ export default defineConfig({
     shikiConfig: {
       theme: 'dracula',
       wrap: true
-    }
+    },
+    remarkPlugins: [remarkInternalLinks]
   }
 });

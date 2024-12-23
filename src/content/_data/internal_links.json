@@ -1,0 +1,528 @@
+{
+  "keywords": {
+    "camera buying guide": {
+      "primary": "/posts/camera-buying-guide",
+      "related": []
+    },
+    "best cameras 2024": {
+      "primary": "/posts/camera-buying-guide",
+      "related": []
+    },
+    "dslr vs mirrorless": {
+      "primary": "/posts/camera-buying-guide",
+      "related": []
+    },
+    "camera comparison": {
+      "primary": "/posts/camera-buying-guide",
+      "related": []
+    },
+    "photography equipment": {
+      "primary": "/posts/camera-buying-guide",
+      "related": [
+        "/posts/photography-accessories-guide"
+      ]
+    },
+    "client management": {
+      "primary": "/posts/client-management-guide",
+      "related": []
+    },
+    "client communication": {
+      "primary": "/posts/client-management-guide",
+      "related": []
+    },
+    "photography contracts": {
+      "primary": "/posts/client-management-guide",
+      "related": []
+    },
+    "client experience": {
+      "primary": "/posts/client-management-guide",
+      "related": []
+    },
+    "photography workflow": {
+      "primary": "/posts/client-management-guide",
+      "related": []
+    },
+    "camera lenses": {
+      "primary": "/posts/essential-camera-lenses",
+      "related": []
+    },
+    "photography lenses": {
+      "primary": "/posts/essential-camera-lenses",
+      "related": []
+    },
+    "prime vs zoom": {
+      "primary": "/posts/essential-camera-lenses",
+      "related": []
+    },
+    "lens guide": {
+      "primary": "/posts/essential-camera-lenses",
+      "related": []
+    },
+    "lens comparison": {
+      "primary": "/posts/essential-camera-lenses",
+      "related": []
+    },
+    "family portraits": {
+      "primary": "/posts/family-portrait-guide",
+      "related": [
+        "/topics/portrait-photography"
+      ]
+    },
+    "family photography": {
+      "primary": "/posts/family-portrait-guide",
+      "related": []
+    },
+    "group photos": {
+      "primary": "/posts/family-portrait-guide",
+      "related": []
+    },
+    "outdoor portraits": {
+      "primary": "/posts/family-portrait-guide",
+      "related": []
+    },
+    "child photography": {
+      "primary": "/posts/family-portrait-guide",
+      "related": []
+    },
+    "lightroom tutorial": {
+      "primary": "/posts/lightroom-editing-guide",
+      "related": []
+    },
+    "photo editing": {
+      "primary": "/posts/lightroom-editing-guide",
+      "related": [
+        "/topics/photo-editing"
+      ]
+    },
+    "lightroom workflow": {
+      "primary": "/posts/lightroom-editing-guide",
+      "related": []
+    },
+    "color grading": {
+      "primary": "/posts/lightroom-editing-guide",
+      "related": []
+    },
+    "photo processing": {
+      "primary": "/posts/lightroom-editing-guide",
+      "related": []
+    },
+    "photography accessories": {
+      "primary": "/posts/photography-accessories-guide",
+      "related": [
+        "/posts/wedding-photography-gear",
+        "/topics/camera-gear"
+      ]
+    },
+    "camera gear": {
+      "primary": "/posts/photography-accessories-guide",
+      "related": []
+    },
+    "camera accessories": {
+      "primary": "/posts/photography-accessories-guide",
+      "related": []
+    },
+    "photography tools": {
+      "primary": "/posts/photography-accessories-guide",
+      "related": []
+    },
+    "photography business": {
+      "primary": "/posts/photography-business-startup",
+      "related": [
+        "/topics/photography-business",
+        "/topics/wedding-photography"
+      ]
+    },
+    "business planning": {
+      "primary": "/posts/photography-business-startup",
+      "related": []
+    },
+    "photography startup": {
+      "primary": "/posts/photography-business-startup",
+      "related": []
+    },
+    "legal requirements": {
+      "primary": "/posts/photography-business-startup",
+      "related": []
+    },
+    "business license": {
+      "primary": "/posts/photography-business-startup",
+      "related": []
+    },
+    "photography marketing": {
+      "primary": "/posts/photography-marketing-strategies",
+      "related": [
+        "/topics/photography-business"
+      ]
+    },
+    "social media marketing": {
+      "primary": "/posts/photography-marketing-strategies",
+      "related": []
+    },
+    "photography seo": {
+      "primary": "/posts/photography-marketing-strategies",
+      "related": []
+    },
+    "client acquisition": {
+      "primary": "/posts/photography-marketing-strategies",
+      "related": []
+    },
+    "photography portfolio": {
+      "primary": "/posts/photography-marketing-strategies",
+      "related": []
+    },
+    "photoshop tutorial": {
+      "primary": "/posts/photoshop-techniques",
+      "related": []
+    },
+    "photo retouching": {
+      "primary": "/posts/photoshop-techniques",
+      "related": []
+    },
+    "image editing": {
+      "primary": "/posts/photoshop-techniques",
+      "related": [
+        "/posts/raw-processing-workflow"
+      ]
+    },
+    "photo manipulation": {
+      "primary": "/posts/photoshop-techniques",
+      "related": []
+    },
+    "compositing": {
+      "primary": "/posts/photoshop-techniques",
+      "related": []
+    },
+    "portrait lighting": {
+      "primary": "/posts/portrait-lighting-guide",
+      "related": []
+    },
+    "natural light photography": {
+      "primary": "/posts/portrait-lighting-guide",
+      "related": []
+    },
+    "studio lighting": {
+      "primary": "/posts/portrait-lighting-guide",
+      "related": []
+    },
+    "lighting setup": {
+      "primary": "/posts/portrait-lighting-guide",
+      "related": []
+    },
+    "portrait photography": {
+      "primary": "/posts/portrait-lighting-guide",
+      "related": [
+        "/posts/portrait-posing-techniques",
+        "/topics/portrait-photography"
+      ]
+    },
+    "portrait posing": {
+      "primary": "/posts/portrait-posing-techniques",
+      "related": []
+    },
+    "posing techniques": {
+      "primary": "/posts/portrait-posing-techniques",
+      "related": []
+    },
+    "group portraits": {
+      "primary": "/posts/portrait-posing-techniques",
+      "related": []
+    },
+    "headshot posing": {
+      "primary": "/posts/portrait-posing-techniques",
+      "related": []
+    },
+    "raw processing": {
+      "primary": "/posts/raw-processing-workflow",
+      "related": []
+    },
+    "photo workflow": {
+      "primary": "/posts/raw-processing-workflow",
+      "related": []
+    },
+    "color management": {
+      "primary": "/posts/raw-processing-workflow",
+      "related": []
+    },
+    "batch editing": {
+      "primary": "/posts/raw-processing-workflow",
+      "related": []
+    },
+    "wedding photography gear": {
+      "primary": "/posts/wedding-photography-gear",
+      "related": []
+    },
+    "camera equipment": {
+      "primary": "/posts/wedding-photography-gear",
+      "related": [
+        "/topics/camera-gear"
+      ]
+    },
+    "wedding photography tips": {
+      "primary": "/posts/wedding-photography-gear",
+      "related": []
+    },
+    "wedding photography pricing": {
+      "primary": "/posts/wedding-photography-pricing",
+      "related": []
+    },
+    "photography packages": {
+      "primary": "/posts/wedding-photography-pricing",
+      "related": []
+    },
+    "wedding pricing": {
+      "primary": "/posts/wedding-photography-pricing",
+      "related": []
+    },
+    "boudoir photography": {
+      "primary": "/articles/top-courses-boudoir-photographers",
+      "related": [
+        "/articles/top-podcasts-boudoir-photographers",
+        "/articles/top-youtubers-boudoir-photographers"
+      ]
+    },
+    "online courses": {
+      "primary": "/articles/top-courses-boudoir-photographers",
+      "related": [
+        "/articles/top-courses-newborn-photographers",
+        "/articles/top-courses-wedding-photographers"
+      ]
+    },
+    "professional development": {
+      "primary": "/articles/top-courses-boudoir-photographers",
+      "related": [
+        "/articles/top-courses-newborn-photographers",
+        "/articles/top-courses-wedding-photographers",
+        "/articles/top-podcasts-boudoir-photographers",
+        "/articles/top-podcasts-newborn-photographers",
+        "/articles/top-podcasts-wedding-photographers",
+        "/articles/top-youtubers-boudoir-photographers",
+        "/articles/top-youtubers-newborn-photographers",
+        "/articles/top-youtubers-wedding-photographers"
+      ]
+    },
+    "creative inspiration": {
+      "primary": "/articles/top-courses-boudoir-photographers",
+      "related": [
+        "/articles/top-podcasts-boudoir-photographers",
+        "/articles/top-youtubers-boudoir-photographers"
+      ]
+    },
+    "newborn photography": {
+      "primary": "/articles/top-courses-newborn-photographers",
+      "related": [
+        "/articles/top-podcasts-newborn-photographers",
+        "/articles/top-youtubers-newborn-photographers"
+      ]
+    },
+    "newborn posing": {
+      "primary": "/articles/top-courses-newborn-photographers",
+      "related": [
+        "/articles/top-podcasts-newborn-photographers",
+        "/articles/top-youtubers-newborn-photographers"
+      ]
+    },
+    "wedding photography": {
+      "primary": "/articles/top-courses-wedding-photographers",
+      "related": [
+        "/articles/top-podcasts-wedding-photographers",
+        "/articles/top-youtubers-wedding-photographers",
+        "/topics/wedding-photography"
+      ]
+    },
+    "wedding business": {
+      "primary": "/articles/top-courses-wedding-photographers",
+      "related": [
+        "/articles/top-podcasts-wedding-photographers",
+        "/articles/top-youtubers-wedding-photographers"
+      ]
+    },
+    "photography podcasts": {
+      "primary": "/articles/top-podcasts-boudoir-photographers",
+      "related": [
+        "/articles/top-podcasts-newborn-photographers",
+        "/articles/top-podcasts-wedding-photographers"
+      ]
+    },
+    "youtube tutorials": {
+      "primary": "/articles/top-youtubers-boudoir-photographers",
+      "related": [
+        "/articles/top-youtubers-newborn-photographers",
+        "/articles/top-youtubers-wedding-photographers"
+      ]
+    },
+    "photography gear": {
+      "primary": "/topics/camera-gear",
+      "related": []
+    },
+    "camera reviews": {
+      "primary": "/topics/camera-gear",
+      "related": []
+    },
+    "lens reviews": {
+      "primary": "/topics/camera-gear",
+      "related": []
+    },
+    "post processing": {
+      "primary": "/topics/photo-editing",
+      "related": []
+    },
+    "lightroom tutorials": {
+      "primary": "/topics/photo-editing",
+      "related": []
+    },
+    "photoshop guides": {
+      "primary": "/topics/photo-editing",
+      "related": []
+    },
+    "editing workflow": {
+      "primary": "/topics/photo-editing",
+      "related": []
+    },
+    "business management": {
+      "primary": "/topics/photography-business",
+      "related": []
+    },
+    "client relations": {
+      "primary": "/topics/photography-business",
+      "related": []
+    },
+    "photography pricing": {
+      "primary": "/topics/photography-business",
+      "related": []
+    },
+    "professional portraits": {
+      "primary": "/topics/portrait-photography",
+      "related": []
+    },
+    "headshot photography": {
+      "primary": "/topics/portrait-photography",
+      "related": []
+    },
+    "business portraits": {
+      "primary": "/topics/portrait-photography",
+      "related": []
+    },
+    "wedding photographer": {
+      "primary": "/topics/wedding-photography",
+      "related": []
+    },
+    "wedding photos": {
+      "primary": "/topics/wedding-photography",
+      "related": []
+    }
+  },
+  "urls": {
+    "/posts/camera-buying-guide": {
+      "title": "Complete Camera Buying Guide 2024",
+      "type": "posts"
+    },
+    "/posts/client-management-guide": {
+      "title": "Photography Client Management Guide",
+      "type": "posts"
+    },
+    "/posts/essential-camera-lenses": {
+      "title": "Essential Camera Lenses for Every Photographer",
+      "type": "posts"
+    },
+    "/posts/family-portrait-guide": {
+      "title": "Complete Guide to Family Portrait Photography",
+      "type": "posts"
+    },
+    "/posts/lightroom-editing-guide": {
+      "title": "Complete Adobe Lightroom Editing Guide",
+      "type": "posts"
+    },
+    "/posts/photography-accessories-guide": {
+      "title": "Essential Photography Accessories Guide",
+      "type": "posts"
+    },
+    "/posts/photography-business-startup": {
+      "title": "How to Start a Photography Business: Complete Guide",
+      "type": "posts"
+    },
+    "/posts/photography-marketing-strategies": {
+      "title": "Effective Marketing Strategies for Photographers",
+      "type": "posts"
+    },
+    "/posts/photoshop-techniques": {
+      "title": "Essential Photoshop Techniques for Photographers",
+      "type": "posts"
+    },
+    "/posts/portrait-lighting-guide": {
+      "title": "Portrait Lighting Guide: Natural vs Studio Light",
+      "type": "posts"
+    },
+    "/posts/portrait-posing-techniques": {
+      "title": "Essential Portrait Posing Techniques for Photographers",
+      "type": "posts"
+    },
+    "/posts/raw-processing-workflow": {
+      "title": "Professional RAW Processing Workflow",
+      "type": "posts"
+    },
+    "/posts/wedding-photography-gear": {
+      "title": "Essential Wedding Photography Gear Guide",
+      "type": "posts"
+    },
+    "/posts/wedding-photography-pricing": {
+      "title": "How to Price Your Wedding Photography Services",
+      "type": "posts"
+    },
+    "/articles/top-courses-boudoir-photographers": {
+      "title": "Top Courses for Boudoir Photographers",
+      "type": "articles"
+    },
+    "/articles/top-courses-newborn-photographers": {
+      "title": "Top Courses for Newborn Photographers",
+      "type": "articles"
+    },
+    "/articles/top-courses-wedding-photographers": {
+      "title": "Top Courses for Wedding Photographers",
+      "type": "articles"
+    },
+    "/articles/top-podcasts-boudoir-photographers": {
+      "title": "Top Podcasts for Boudoir Photographers",
+      "type": "articles"
+    },
+    "/articles/top-podcasts-newborn-photographers": {
+      "title": "Top Podcasts for Newborn Photographers",
+      "type": "articles"
+    },
+    "/articles/top-podcasts-wedding-photographers": {
+      "title": "Top Podcasts for Wedding Photographers",
+      "type": "articles"
+    },
+    "/articles/top-youtubers-boudoir-photographers": {
+      "title": "Top YouTubers for Boudoir Photographers",
+      "type": "articles"
+    },
+    "/articles/top-youtubers-newborn-photographers": {
+      "title": "Top YouTubers for Newborn Photographers",
+      "type": "articles"
+    },
+    "/articles/top-youtubers-wedding-photographers": {
+      "title": "Top YouTubers for Wedding Photographers",
+      "type": "articles"
+    },
+    "/topics/camera-gear": {
+      "title": "Photography Equipment Guide",
+      "type": "topics"
+    },
+    "/topics/photo-editing": {
+      "title": "Photo Editing and Post-Processing Guide",
+      "type": "topics"
+    },
+    "/topics/photography-business": {
+      "title": "Photography Business Guide",
+      "type": "topics"
+    },
+    "/topics/portrait-photography": {
+      "title": "Portrait Photography Guide",
+      "type": "topics"
+    },
+    "/topics/wedding-photography": {
+      "title": "Wedding Photography Guide",
+      "type": "topics"
+    }
+  }
+}
