@@ -30,59 +30,73 @@ const articles = await getCollection('articles', (article) =>
 
 <Layout title={topic.data.title} description={topic.data.description}>
   <main class="max-w-7xl mx-auto px-4 pb-20">
-    <article class="mb-12">
-      <div class="mb-8">
-        <img
-          src={getOptimizedImageUrl(topic.data.topicImage?.src || DEFAULT_IMAGES.post.src, 1200)}
-          alt={topic.data.topicImage?.alt || `${topic.data.title} featured image`}
-          width={topic.data.topicImage?.width || DEFAULT_IMAGES.post.width}
-          height={topic.data.topicImage?.height || DEFAULT_IMAGES.post.height}
-          class="w-full aspect-video object-cover rounded-xl shadow-lg"
-        />
-      </div>
-
-      <header class="text-center mb-12">
-        <h1 class="text-4xl font-bold mb-4">{topic.data.title}</h1>
-        <p class="text-xl text-base-content/80 max-w-2xl mx-auto">{topic.data.description}</p>
-      </header>
-
-      <div class="lg:grid lg:grid-cols-[250px_1fr] lg:gap-12">
-        <aside class="hidden lg:block">
-          <div class="sticky top-4">
-            <div class="flex flex-col gap-12">
-              <TableOfContents 
-                headings={headings} 
-                hasFAQ={!!topic.data.faq}
-              />
-              <SidebarCTA ctaId="post_content" />
-            </div>
+    <div class="py-10 mb-16 bg-primary/10 rounded-b-2xl shadow-md">
+      <div class="grid lg:grid-cols-[3fr_2fr] gap-12 items-center px-10">
+        {/* Left Column - Text Content */}
+        <div class="flex flex-col gap-6">
+          <div class="flex items-center gap-4">
+            <span class="badge badge-primary">Topic Guide</span>
+            {topic.data.featured && <span class="badge">Featured</span>}
           </div>
-        </aside>
-        <div class="prose prose-lg max-w-4xl mx-auto mb-16">
-          <Content />
+          <h1 class="text-4xl lg:text-5xl font-bold">{topic.data.title}</h1>
+          <p class="text-xl text-base-content/80">{topic.data.description}</p>
+        </div>
 
-          {topic.data.sections && (
-            <div class="mb-12">
-              {topic.data.sections.map((section) => (
-                <div class="mb-8">
-                  <h2 class="text-2xl font-bold mb-4">{section.title}</h2>
-                  <div class="prose" set:html={section.content} />
-                </div>
-              ))}
-            </div>
-          )}
+        {/* Right Column - Image */}
+        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+          <img
+            src={getOptimizedImageUrl(topic.data.image?.src || DEFAULT_IMAGES.post.src, 800)}
+            alt={topic.data.image?.alt || `${topic.data.title} featured image`}
+            class="object-cover w-full h-full"
+          />
         </div>
       </div>
+    </div>
 
-      <RelatedContent 
-        content={posts} 
-        title="Related Posts" 
-      />
+    <div class="lg:grid lg:grid-cols-[250px_1fr] lg:gap-12">
+      <aside class="hidden lg:block">
+        <div class="sticky top-4">
+          <div class="flex flex-col gap-12">
+            <TableOfContents 
+              headings={headings} 
+              hasFAQ={!!topic.data.faq}
+            />
+            <SidebarCTA ctaId="post_content" />
+          </div>
+        </div>
+      </aside>
+      <div class="prose prose-lg max-w-4xl mx-auto mb-16">
+        <Content />
 
-      <RelatedContent 
-        content={articles} 
-        title="Related Articles" 
-      />
-    </article>
+        {topic.data.sections && (
+          <div class="mb-12">
+            {topic.data.sections.map((section) => (
+              <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">{section.title}</h2>
+                <div class="prose" set:html={section.content} />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+
+    <RelatedContent 
+      content={posts} 
+      title="Related Posts" 
+    />
+
+    <RelatedContent 
+      content={articles} 
+      title="Related Articles" 
+    />
   </main>
 </Layout>
+
+<style>
+  /* Ensure headings have smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+  }
+</style>

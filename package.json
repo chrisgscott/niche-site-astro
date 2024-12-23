@@ -16,6 +16,7 @@
   "dependencies": {
     "@astrojs/mdx": "^2.1.1",
     "@astrojs/tailwind": "^5.1.0",
+    "@astrolib/seo": "^1.0.0-beta.8",
     "@fontsource-variable/outfit": "^5.0.8",
     "astro": "^4.4.0",
     "date-fns": "^3.3.1",
