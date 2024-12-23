@@ -1,4 +1,5 @@
 ---
+import { seoMetadataGenerator } from '../utils/seo-metadata';
 import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.astro";
 import "@fontsource-variable/outfit";
@@ -6,20 +7,71 @@ import "@fontsource-variable/outfit";
 interface Props {
   title: string;
   description: string;
+  content?: any; // Optional content for more detailed SEO
 }
 
-const { title, description } = Astro.props;
+const { 
+  title, 
+  description, 
+  content 
+} = Astro.props;
+
+// Generate SEO metadata
+const seoMetadata = content 
+  ? seoMetadataGenerator.generateMetadata(content)
+  : {
+      title, 
+      description, 
+      keywords: [],
+      canonicalURL: Astro.url.href
+    };
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
+    <meta name="description" content={seoMetadata.description} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <title>{seoMetadata.title}</title>
+
+    {/* Keywords */}
+    {seoMetadata.keywords.length > 0 && (
+      <meta name="keywords" content={seoMetadata.keywords.join(', ')} />
+    )}
+
+    {/* Canonical URL */}
+    {seoMetadata.canonicalURL && (
+      <link rel="canonical" href={seoMetadata.canonicalURL} />
+    )}
+
+    {/* Open Graph Tags */}
+    <meta property="og:title" content={seoMetadata.ogTitle || seoMetadata.title} />
+    <meta property="og:description" content={seoMetadata.ogDescription || seoMetadata.description} />
+    {seoMetadata.ogImage && (
+      <meta property="og:image" content={seoMetadata.ogImage} />
+    )}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={seoMetadata.canonicalURL} />
+
+    {/* Twitter Card Tags */}
+    {seoMetadata.twitterCard && (
+      <>
+        <meta name="twitter:card" content={seoMetadata.twitterCard.card} />
+        <meta name="twitter:title" content={seoMetadata.twitterCard.title || seoMetadata.title} />
+        <meta name="twitter:description" content={seoMetadata.twitterCard.description || seoMetadata.description} />
+        {seoMetadata.twitterCard.image && (
+          <meta name="twitter:image" content={seoMetadata.twitterCard.image} />
+        )}
+      </>
+    )}
+
+    {/* JSON-LD Schema */}
+    {seoMetadata.jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(seoMetadata.jsonLd)} />
+    )}
   </head>
 
   <body>
