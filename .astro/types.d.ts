@@ -136,16 +136,65 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"articles": {
-"wedding-photography-lighting-guide.md": {
-	id: "wedding-photography-lighting-guide.md";
-  slug: "wedding-photography-lighting-guide";
+"top-courses-boudoir-photographers.md": {
+	id: "top-courses-boudoir-photographers.md";
+  slug: "top-courses-boudoir-photographers";
   body: string;
   collection: "articles";
   data: any
 } & { render(): Render[".md"] };
-"wedding-photography-packages.md": {
-	id: "wedding-photography-packages.md";
-  slug: "wedding-photography-packages";
+"top-courses-newborn-photographers.md": {
+	id: "top-courses-newborn-photographers.md";
+  slug: "top-courses-newborn-photographers";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
+"top-courses-wedding-photographers.md": {
+	id: "top-courses-wedding-photographers.md";
+  slug: "top-courses-wedding-photographers";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
+"top-podcasts-boudoir-photographers.md": {
+	id: "top-podcasts-boudoir-photographers.md";
+  slug: "top-podcasts-boudoir-photographers";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
+"top-podcasts-newborn-photographers.md": {
+	id: "top-podcasts-newborn-photographers.md";
+  slug: "top-podcasts-newborn-photographers";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
+"top-podcasts-wedding-photographers.md": {
+	id: "top-podcasts-wedding-photographers.md";
+  slug: "top-podcasts-wedding-photographers";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
+"top-youtubers-boudoir-photographers.md": {
+	id: "top-youtubers-boudoir-photographers.md";
+  slug: "top-youtubers-boudoir-photographers";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
+"top-youtubers-newborn-photographers.md": {
+	id: "top-youtubers-newborn-photographers.md";
+  slug: "top-youtubers-newborn-photographers";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
+"top-youtubers-wedding-photographers.md": {
+	id: "top-youtubers-wedding-photographers.md";
+  slug: "top-youtubers-wedding-photographers";
   body: string;
   collection: "articles";
   data: any
@@ -175,6 +224,90 @@ declare module 'astro:content' {
 } & { render(): Render[".mdx"] };
 };
 "posts": {
+"camera-buying-guide.md": {
+	id: "camera-buying-guide.md";
+  slug: "camera-buying-guide";
+  body: string;
+  collection: "posts";
+  data: any
+} & { render(): Render[".md"] };
+"client-management-guide.md": {
+	id: "client-management-guide.md";
+  slug: "client-management-guide";
+  body: string;
+  collection: "posts";
+  data: any
+} & { render(): Render[".md"] };
+"essential-camera-lenses.md": {
+	id: "essential-camera-lenses.md";
+  slug: "essential-camera-lenses";
+  body: string;
+  collection: "posts";
+  data: any
+} & { render(): Render[".md"] };
+"family-portrait-guide.md": {
+	id: "family-portrait-guide.md";
+  slug: "family-portrait-guide";
+  body: string;
+  collection: "posts";
+  data: any
+} & { render(): Render[".md"] };
+"lightroom-editing-guide.md": {
+	id: "lightroom-editing-guide.md";
+  slug: "lightroom-editing-guide";
+  body: string;
+  collection: "posts";
+  data: any
+} & { render(): Render[".md"] };
+"photography-accessories-guide.md": {
+	id: "photography-accessories-guide.md";
+  slug: "photography-accessories-guide";
+  body: string;
+  collection: "posts";
+  data: any
+} & { render(): Render[".md"] };
+"photography-business-startup.md": {
+	id: "photography-business-startup.md";
+  slug: "photography-business-startup";
+  body: string;
+  collection: "posts";
+  data: any
+} & { render(): Render[".md"] };
+"photography-marketing-strategies.md": {
+	id: "photography-marketing-strategies.md";
+  slug: "photography-marketing-strategies";
+  body: string;
+  collection: "posts";
+  data: any
+} & { render(): Render[".md"] };
+"photoshop-techniques.md": {
+	id: "photoshop-techniques.md";
+  slug: "photoshop-techniques";
+  body: string;
+  collection: "posts";
+  data: any
+} & { render(): Render[".md"] };
+"portrait-lighting-guide.md": {
+	id: "portrait-lighting-guide.md";
+  slug: "portrait-lighting-guide";
+  body: string;
+  collection: "posts";
+  data: any
+} & { render(): Render[".md"] };
+"portrait-posing-techniques.md": {
+	id: "portrait-posing-techniques.md";
+  slug: "portrait-posing-techniques";
+  body: string;
+  collection: "posts";
+  data: any
+} & { render(): Render[".md"] };
+"raw-processing-workflow.md": {
+	id: "raw-processing-workflow.md";
+  slug: "raw-processing-workflow";
+  body: string;
+  collection: "posts";
+  data: any
+} & { render(): Render[".md"] };
 "wedding-photography-gear.md": {
 	id: "wedding-photography-gear.md";
   slug: "wedding-photography-gear";
@@ -191,6 +324,34 @@ declare module 'astro:content' {
 } & { render(): Render[".md"] };
 };
 "topics": {
+"camera-gear.md": {
+	id: "camera-gear.md";
+  slug: "camera-gear";
+  body: string;
+  collection: "topics";
+  data: any
+} & { render(): Render[".md"] };
+"photo-editing.md": {
+	id: "photo-editing.md";
+  slug: "photo-editing";
+  body: string;
+  collection: "topics";
+  data: any
+} & { render(): Render[".md"] };
+"photography-business.md": {
+	id: "photography-business.md";
+  slug: "photography-business";
+  body: string;
+  collection: "topics";
+  data: any
+} & { render(): Render[".md"] };
+"portrait-photography.md": {
+	id: "portrait-photography.md";
+  slug: "portrait-photography";
+  body: string;
+  collection: "topics";
+  data: any
+} & { render(): Render[".md"] };
 "wedding-photography.md": {
 	id: "wedding-photography.md";
   slug: "wedding-photography";
