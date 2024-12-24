@@ -1,7 +1,108 @@
+niche_landscape_analysis:
+  description: >-
+    Conduct comprehensive research to understand the target niche, identify key topics,
+    and develop an initial content strategy
+  expected_output: >-
+    Structured analysis including primary keywords, topic clusters, and competitive landscape
+    with fields: primary_keywords (list), topic_clusters (dict), competitive_landscape (dict)
+  agent: >-
+    keyword_research_specialist
 
-hello_world:
-  description: >
-    As is tradition in software, let's start by saying 'Hello, World!'. Then, pick one or two tasks that they should try to do next with AgentStack.
-  expected_output: >
-    The sentence Hello, World! followed by two things the user should try to customize their agent further.
-  agent: alex
+topic_hierarchy_construction:
+  description: >-
+    Transform initial research into a structured content hierarchy, identifying primary
+    topic hubs and potential spoke content
+  expected_output: >-
+    Detailed content hierarchy with primary hubs, spoke topics, and semantic connections
+    with fields: primary_hubs (list), spoke_topics (dict), semantic_connections (dict)
+  agent: >-
+    content_topology_architect
+
+spoke_topic_deep_research:
+  description: >-
+    Perform in-depth research for each identified spoke topic, gathering authoritative
+    and unique insights
+  expected_output: >-
+    Comprehensive research brief with topic insights, parent topic links, and keyword variations
+    with fields: topic (str), parent_topic (optional str), key_insights (list), keyword_variations (list)
+  agent: >-
+    content_writer
+
+content_drafting:
+  description: >-
+    Transform research findings into engaging, informative markdown content that meets
+    project guidelines
+  expected_output: >-
+    Full markdown content draft with semantic structure and keyword integration
+    with fields: title (str), markdown_content (str), keywords (list), semantic_structure (dict)
+  agent: >-
+    content_writer
+
+visual_asset_curation:
+  description: >-
+    Source and select high-quality, contextually relevant images to complement and
+    enhance written content
+  expected_output: >-
+    Curated collection of image assets with comprehensive metadata
+    with fields: id (str), url (str), description (optional), source (str), keywords (list)
+  agent: >-
+    content_image_specialist
+
+seo_metadata_optimization:
+  description: >-
+    Generate comprehensive, SEO-optimized frontmatter that maximizes content discoverability
+  expected_output: >-
+    Fully optimized SEO metadata with schema markup and keyword optimization
+    with fields: title (str), meta_description (str), keywords (list), schema_markup (dict), optimization_score (optional float)
+  agent: >-
+    seo_optimization_specialist
+
+frontmatter_schema_validation:
+  description: >-
+    Rigorously validate and optimize content frontmatter to ensure precise compliance 
+    with our defined schema, maximizing SEO potential and maintaining consistent content structure
+  expected_output: >-
+    Fully validated and potentially refined frontmatter matching our exact schema
+    with fields: title (str), description (str), keywords (list), additional schema-compliant metadata
+  agent: >-
+    frontmatter_compliance_specialist
+
+internal_linking_strategy:
+  description: >-
+    Identify and implement natural, value-adding internal links to enhance site-wide
+    SEO and user experience
+  expected_output: >-
+    Strategic internal linking plan with source pages, linked pages, and link rationale
+    with fields: source_page (str), linked_pages (list), link_rationale (dict)
+  agent: >-
+    internal_linking_strategist
+
+quality_assurance_review:
+  description: >-
+    Conduct a thorough review to ensure content meets quality, accuracy, and compliance
+    standards
+  expected_output: >-
+    Comprehensive quality assessment with accuracy scoring and improvement suggestions
+    with fields: content_accuracy_score (float), grammatical_compliance (bool), suggested_improvements (list)
+  agent: >-
+    seo_optimization_specialist
+
+content_export_and_organization:
+  description: >-
+    Transform finalized content into project-specific markdown format and manage content
+    repository organization
+  expected_output: >-
+    Organized content export with file list and repository structure
+    with fields: exported_files (list), repository_structure (dict)
+  agent: >-
+    content_deployment_specialist
+    
+topic_hub_markdown_generation:
+  description: >-
+    Generate comprehensive markdown content for topic hub pages that provides an overview
+    of the topic, showcases related spoke content, and establishes topical authority
+  expected_output: >-
+    Comprehensive topic hub markdown with overview and related content mapping
+    with fields: hub_title (str), overview (str), related_spoke_content (list), topical_authority_indicators (list)
+  agent: >-
+    content_topology_architect
